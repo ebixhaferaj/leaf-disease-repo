@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  tf_serving:
+    image: tensorflow/serving
+    ports:
+      - "8605:8605"
+    volumes:
+      - "C:/Users/HP/Code/Plant_Disease:/Plant_Disease"
+    entrypoint:
+      - "tensorflow_model_server"
+      - "--rest_api_port=8605"
+      - "--model_name=best_model"
+      - "--model_base_path=/Plant_Disease/saved_models"
+
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
