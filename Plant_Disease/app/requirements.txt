@@ -1,0 +1,39 @@
+# Web framework
+fastapi==0.115.12
+uvicorn==0.34.1
+
+# Auth & security
+passlib==1.7.4
+bcrypt==4.3.0
+python-jose==3.4.0
+python-multipart==0.0.20
+email_validator==2.2.0
+
+# Config
+python-dotenv==1.1.0
+pydantic==2.11.3
+pydantic-settings==2.9.1
+
+# ORM / Database
+SQLAlchemy==2.0.40
+psycopg2-binary==2.9.10
+
+# ML/DL
+tensorflow==2.19.0
+tensorflow-hub==0.16.1
+opencv-python==4.11.0.86
+numpy==2.0.2
+pillow==11.1.0
+
+# Scheduler
+APScheduler==3.11.0
+
+# PDF & reports
+weasyprint==65.1
+reportlab==4.4.0
+xhtml2pdf==0.2.17
+svglib==1.5.1
+qrcode==8.2
+
+# Optional: for colorized console logs and display
+rich==14.0.0

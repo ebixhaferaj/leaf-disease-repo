@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Text, Float, DateTime, ForeignKey, Boolean
+from sqlalchemy.orm import relationship
 from app.database.database import Base
 from datetime import datetime, timezone
 
@@ -12,3 +13,10 @@ class Predictions(Base):
     image_url = Column(String(300), nullable=False)
     confirmed = Column(Boolean, default=False, nullable=False)
     timestamp = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+
+    # Add this at the bottom of the Predictions class
+    reports = relationship(
+        "Report",
+        secondary="report_prediction_association",
+        back_populates="predictions"
+    )
