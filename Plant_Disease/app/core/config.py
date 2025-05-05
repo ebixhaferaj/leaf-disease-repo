@@ -13,27 +13,6 @@ URL_DATABASE = getenv("URL_DATABASE")
 # AI MODEL
 ENDPOINT = getenv("ENDPOINT")
 
-CLASS_NAMES = [
-    'Background_without_leaves', 
-    'Corn__Gray_Leaf_Spot', 
-    'Corn__Healthy',
-    'Corn__Northern_Leaf_Blight',
-    'Grape__Downey_Mildew',
-    'Grape__Healthy',
-    'Grape__Powdery_Mildew',
-    'Olive__Healthy',
-    'Olive__Peacock_Spot',
-    'Olive__Rust_Mite',
-    'Potato__Early_Blight',
-    'Potato__Healthy',
-    'Potato__Late_blight',
-    'Tomato__Early_blight',
-    'Tomato__Healthy',
-    'Tomato__Late_Blight',
-    'Wheat__Healthy',
-    'Wheat__Septoria',
-    'Wheat__Yellow_Rust'
-]
 
 #TOKEN
 SECRET_KEY = getenv("SECRET_KEY")
@@ -51,8 +30,6 @@ class Email:
         self.MAIL_FROM = getenv("MAIL_FROM")
         self.MAIL_FROM_NAME = getenv("MAIL_FROM_NAME")
         
-
-email_service = Email()
 
 
 #DOMAIN

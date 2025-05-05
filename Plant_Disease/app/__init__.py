@@ -1,1 +1,1 @@
-from .core.config import ENDPOINT, CLASS_NAMES
+from .core.config import ENDPOINT

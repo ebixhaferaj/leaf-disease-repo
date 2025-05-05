@@ -60,7 +60,7 @@ async def predict(
         user_id_fk=current_user.id,
         name_fk=disease.name,
         prediction_confidence=confidence,
-        image_url=unique_filename,  # Save the full path
+        image_url=unique_filename, 
         confirmed=False
     )
 
@@ -87,7 +87,6 @@ async def confirm_prediction(
     if not prediction:
         raise HTTPException(status_code=404, detail="Prediction not found")
 
-    # Mark the prediction as confirmed
     prediction.confirmed = True
 
     db.commit()
