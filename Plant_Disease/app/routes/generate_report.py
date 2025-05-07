@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends
 from app.schemas import ConfirmBatchPredictionRequest
-from app.services import get_current_user, get_batch_predictions, generate_pdf
+from app.services import get_current_user, get_batch_predictions, generate_pdf, RoleChecker
 from app.database import get_db
 from sqlalchemy.orm import Session
 from app.models import Users, Report, Leaf_Diseases, ReportPredictionAssociation
@@ -14,7 +14,9 @@ router = APIRouter(
     tags=["generate-report"]
 )
 
-@router.post("/")
+farmer_only = RoleChecker(allowed_roles=["farmer"])
+
+@router.post("/", dependencies=[Depends(farmer_only)])
 async def generate_report(
     data: ConfirmBatchPredictionRequest,
     db: Session = Depends(get_db),

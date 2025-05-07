@@ -17,6 +17,8 @@ router = APIRouter(
     tags=['predict']
 )
 
+
+
 @router.post("/")
 async def predict(
     file: UploadFile = File(...),
@@ -95,21 +97,23 @@ async def confirm_prediction(
     return {"message": "Prediction confirmed successfully.", "prediction_id": prediction.id}
 
 
-#@router.get("/image/{prediction_id}")
-#async def get_prediction_image(
-#    prediction_id: int,
-#    db: Session = Depends(get_db),
-#    current_user: Users = Depends(get_current_user)
-#):
-#    prediction = db.query(Predictions).filter(
-#        Predictions.id == prediction_id,
-#        Predictions.user_id_fk == current_user.id
-#    ).first()
-#
-#    if not prediction:
-#        raise HTTPException(status_code=404, detail="Prediction not found")
-#
-#    if not os.path.exists(prediction.image_url):
-#        raise HTTPException(status_code=404, detail="Image not found on server")
-#
-#    return FileResponse(prediction.image_url, media_type="image/jpeg")
+@router.get("/image/{prediction_id}")
+async def get_prediction_image(
+    prediction_id: int,
+    db: Session = Depends(get_db),
+    current_user: Users = Depends(get_current_user)
+):
+    prediction = db.query(Predictions).filter(
+        Predictions.id == prediction_id,
+        Predictions.user_id_fk == current_user.id
+    ).first()
+
+    if not prediction:
+        raise HTTPException(status_code=404, detail="Prediction not found")
+    
+    image_path = os.path.join(PREDICTION_IMAGE_PATH, prediction.image_url)
+
+    if not os.path.exists(image_path):
+        raise HTTPException(status_code=404, detail="Image not found on server")
+
+    return FileResponse(image_path, media_type="image/jpeg")

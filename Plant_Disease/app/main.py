@@ -1,7 +1,5 @@
 from fastapi import FastAPI
-from app.routes import predict
-from app.routes import batch_predict
-from app.routes import generate_report
+from app.routes import predict, batch_predict, generate_report, users
 from app.routes.auth import router as auth_router
 from contextlib import asynccontextmanager
 from app.database import create_tables, seed_leaf_diseases, SessionLocal
@@ -35,6 +33,7 @@ app.include_router(predict.router)
 app.include_router(auth_router)
 app.include_router(batch_predict.router)
 app.include_router(generate_report.router)
+app.include_router(users.router)
 
 
 @app.get("/")

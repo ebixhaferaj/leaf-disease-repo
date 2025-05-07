@@ -17,7 +17,7 @@ def read_files_as_images(data_list: List[bytes]) -> np.ndarray:
 def get_batch_predictions(db: Session, ids: list[int], user_id: int):
     preds = (
         db.query(Predictions)
-        .join(Leaf_Diseases, Predictions.name_fk == Leaf_Diseases.name)  # Adjusted join
+        .join(Leaf_Diseases, Predictions.name_fk == Leaf_Diseases.name)
         .filter(Predictions.id.in_(ids))
         .all()
     )

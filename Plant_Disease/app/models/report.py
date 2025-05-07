@@ -12,7 +12,8 @@ class Report(Base):
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
  
     predictions = relationship(
-        "Predictions",
-        secondary="report_prediction_association",
-        back_populates="reports"
-    )
+    "Predictions",
+    secondary="report_prediction_association",
+    back_populates="reports",
+    passive_deletes=True
+)

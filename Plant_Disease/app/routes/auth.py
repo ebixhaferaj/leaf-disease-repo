@@ -21,7 +21,6 @@ from app.services import (mail,
                           create_message, 
                           add_jti_to_blocklist, 
                           authenticate_user, 
-                          get_current_user, 
                           get_user_by_email,
                           update_user_password)
 from app.core.config import (SECRET_KEY, 
@@ -176,10 +175,6 @@ async def refresh_token(request: RefreshTokenRequest):
     
     except JWTError as exc:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid refresh token") from exc
-
-@router.post("/me")
-async def get_user(user = Depends(get_current_user)):
-    return user
 
 
 @router.post('/password-reset-request')

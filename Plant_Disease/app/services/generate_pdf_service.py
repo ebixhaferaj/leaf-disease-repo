@@ -38,7 +38,7 @@ def generate_pdf(predictions, report_path: str):
     # Timestamp
     c.setFont("Helvetica", 10)
     y_position -= 80
-    c.drawString(margin, y_position, f"Generated on: {datetime.utcnow().strftime('%D-%m-%y')}")
+    c.drawString(margin, y_position, f"Generated on: {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}")
     y_position -= line_height * 2
 
     # Prediction blocks
@@ -80,7 +80,7 @@ def generate_pdf(predictions, report_path: str):
         c.drawString(margin, y_position, f"Confidence: {confidence * 100:.2f}%")
         y_position -= line_height
 
-        c.drawString(margin, y_position, f"Timestamp: {timestamp('%H:%M:%S %D-%m-%y')}")
+        c.drawString(margin, y_position, f"Timestamp: {timestamp}")
         y_position -= line_height
 
         # Draw smaller image
