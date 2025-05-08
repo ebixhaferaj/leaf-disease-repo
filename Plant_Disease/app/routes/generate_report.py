@@ -75,3 +75,13 @@ async def generate_report(
         "message": "Report generated successfully",
         "report_path": report_path
     }
+
+
+#@router.post("/get-reports", dependencies=[Depends(farmer_only)])
+#async def get_reports(
+#    data: ConfirmBatchPredictionRequest,
+#    db: Session = Depends(get_db),
+#    current_user: Users = Depends(get_current_user)
+#):
+#    
+#

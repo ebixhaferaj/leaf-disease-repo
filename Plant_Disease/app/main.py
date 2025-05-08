@@ -6,7 +6,7 @@ from app.database import create_tables, seed_leaf_diseases, SessionLocal
 from app.scheduler.scheduler import scheduler
 from app.scheduler.scheduler import delete_old_unconfirmed_predictions
 
-# Add the job that deletes old unconfirmed predictions every hour
+
 scheduler.add_job(delete_old_unconfirmed_predictions, 'interval', hours=1)
 
 @asynccontextmanager

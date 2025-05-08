@@ -7,6 +7,8 @@ from io import BytesIO
 import os
 from datetime import datetime
 
+
+# Generate pdf
 def generate_pdf(predictions, report_path: str):
     buffer = BytesIO()
     c = canvas.Canvas(buffer, pagesize=letter)
@@ -104,3 +106,7 @@ def generate_pdf(predictions, report_path: str):
     with open(report_path, "wb") as f:
         f.write(buffer.getvalue())
     return report_path
+
+#def get_pdf(
+#        
+#)
