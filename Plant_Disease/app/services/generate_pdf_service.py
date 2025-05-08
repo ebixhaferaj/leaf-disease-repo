@@ -3,6 +3,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
 from reportlab.lib import colors
 from reportlab.lib.utils import ImageReader
+from app.core import PREDICTION_IMAGE_PATH, LOGO_NAME, LOGO_PATH_FOR_PDF
 from io import BytesIO
 import os
 from datetime import datetime
@@ -17,9 +18,9 @@ def generate_pdf(predictions, report_path: str):
     line_height = 14
     y_position = height - margin
 
-    IMAGE_FOLDER = os.path.abspath("Plant_Disease/app/static/predictions/")
-    LOGO_FOLDER = os.path.abspath("Plant_Disease/app/static/logo/")
-    LOGO_PATH = os.path.join(LOGO_FOLDER, "HealthyGreens.png")
+    IMAGE_FOLDER = PREDICTION_IMAGE_PATH
+    LOGO_FOLDER = LOGO_PATH_FOR_PDF
+    LOGO_PATH = os.path.join(LOGO_FOLDER, LOGO_NAME)
 
     # Header: Logo and Title
     try:
@@ -107,6 +108,3 @@ def generate_pdf(predictions, report_path: str):
         f.write(buffer.getvalue())
     return report_path
 
-#def get_pdf(
-#        
-#)

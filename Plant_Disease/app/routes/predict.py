@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 from fastapi import File, UploadFile, APIRouter, Depends, HTTPException, Query
 from app.database.database import get_db, db_dependency
 from app.models import Users, Predictions, Leaf_Diseases
-from app.services import get_current_user, read_file_as_image, RoleChecker, get_prediction_by_id
+from app.services import get_current_user, read_file_as_image, RoleChecker, get_prediction_by_id, delete_prediction
 from app.services.batch_predict_service import get_predictions_by_confirmation_status
 from app.schemas import ConfirmPredictionRequest
 from fastapi.responses import FileResponse
@@ -97,7 +97,7 @@ async def confirm_prediction(
 
 
 # Unconfirmed Predictions
-@router.get("/unconfirmed-predictions", dependencies=[Depends(user_only)])
+@router.get("/unconfirmed-predictions")
 async def get_unconfirmed_predictions(
     db: db_dependency,
     current_user: Users = Depends(get_current_user),
@@ -147,5 +147,17 @@ async def get_prediction(
 ):
     
     prediction = get_prediction_by_id(db=db, user_id=current_user.id, prediction_id=prediction_id)
+
+    return prediction
+
+# Delete prediction
+@router.delete("/delete/{prediction_id}", dependencies=[Depends(user_only)])
+async def delete_user_prediction(
+    prediction_id: int,
+    db: db_dependency,
+    current_user: Users = Depends(get_current_user)
+):
+    
+    prediction = delete_prediction(db=db, user_id=current_user.id, prediction_id=prediction_id)
 
     return prediction

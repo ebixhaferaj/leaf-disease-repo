@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends
 from app.schemas import ConfirmBatchPredictionRequest
+from app.core import REPORT_PATH
 from app.services import get_current_user, get_batch_predictions, generate_pdf, RoleChecker
 from app.database import get_db
 from sqlalchemy.orm import Session
@@ -47,7 +48,7 @@ async def generate_report(
 
     # Generate the PDF
     report_filename = f"report_{uuid.uuid4()}.pdf"
-    report_path = os.path.join(os.getcwd(), 'Plant_Disease', 'app', 'static', 'reports', report_filename)
+    report_path = os.path.join(REPORT_PATH, report_filename)
 
     os.makedirs(os.path.dirname(report_path), exist_ok=True)
 
@@ -73,7 +74,7 @@ async def generate_report(
 
     return {
         "message": "Report generated successfully",
-        "report_path": report_path
+        "report_name": report_filename
     }
 
 

@@ -6,4 +6,13 @@ from .security import (hash_password,
                        create_url_safe_token,
                        decode_url_safe_token)
 
-from .config import ENDPOINT, Email, DOMAIN, REDIS_HOST, REDIS_PORT, MAX_BATCH_SIZE, PREDICTION_IMAGE_PATH
+from .config import (ENDPOINT, 
+                     Email, 
+                     DOMAIN, 
+                     REDIS_HOST, 
+                     REDIS_PORT, 
+                     MAX_BATCH_SIZE, 
+                     PREDICTION_IMAGE_PATH,
+                     LOGO_PATH_FOR_PDF,
+                     LOGO_NAME,
+                     REPORT_PATH)

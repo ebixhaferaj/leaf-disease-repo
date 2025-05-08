@@ -21,7 +21,8 @@ from app.services import (
     read_files_as_images,
     RoleChecker,
     get_predictions_by_confirmation_status,
-    get_prediction_by_id
+    get_prediction_by_id,
+    delete_prediction
 )
 
 
@@ -195,5 +196,19 @@ async def get_prediction(
 ):
     
     prediction = get_prediction_by_id(db=db, user_id=current_user.id, prediction_id=prediction_id)
+
+    return prediction
+
+
+
+# Delete prediction
+@router.delete("/delete/{prediction_id}", dependencies=[Depends(farmer_only)])
+async def delete_farmer_prediction(
+    prediction_id: int,
+    db: db_dependency,
+    current_user: Users = Depends(get_current_user)
+):
+    
+    prediction = delete_prediction(db=db, user_id=current_user.id, prediction_id=prediction_id)
 
     return prediction

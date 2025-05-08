@@ -1,9 +1,12 @@
 from io import BytesIO
+import os
 from PIL import Image
 import numpy as np
+from fastapi import HTTPException, status
 from typing import List
 from sqlalchemy.orm import Session
 from app.models import Predictions, Leaf_Diseases
+from app.core import PREDICTION_IMAGE_PATH
 from sqlalchemy import asc, desc
 
 # Read Images
@@ -48,3 +51,24 @@ def get_prediction_by_id(db, user_id, prediction_id):
         .filter(Predictions.id == prediction_id)).first()
     
     return query
+
+# Delete prediction
+def delete_prediction(db, user_id, prediction_id):
+
+    prediction = get_prediction_by_id(db, user_id, prediction_id)
+
+    if not prediction:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Prediction not found or not authorized to delete."
+        )
+    
+    image_path = os.path.join(PREDICTION_IMAGE_PATH, prediction.image_url)
+    if os.path.exists(image_path):
+        os.remove(image_path)
+
+    # Delete prediction record
+    db.delete(prediction)
+    db.commit()
+
+    return {"detail": "Prediction deleted successfully."}
