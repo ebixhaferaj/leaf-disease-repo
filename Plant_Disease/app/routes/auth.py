@@ -187,7 +187,7 @@ async def password_reset_request(email_data: PasswordResetRequest):
     # Generate the verification URL
     verification_url = f"http://{DOMAIN}/auth/password-reset-confirm/{token}"
 
-    # Render the HTML template and pass the verification URL
+    # Render the HTML template and pass verification URL
     html_content = templates.get_template("reset_password.html").render(verification_url=verification_url)
 
     # Create and send email message
@@ -205,7 +205,7 @@ async def password_reset_request(email_data: PasswordResetRequest):
 @router.post('/password-reset-confirm/{token}')
 async def reset_account_password(
     token: str, 
-    password: PasswordResetConfirm,  # This should include new_password and confirm_password fields
+    password: PasswordResetConfirm,
     db: db_dependency):
 
     if password.new_password != password.confirm_password:

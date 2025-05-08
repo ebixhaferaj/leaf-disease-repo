@@ -1,17 +1,30 @@
+# Standard Library
 import os
 import uuid
-import numpy as np
 from pathlib import Path
 from typing import List
+
+# Third-Party Libraries
+import numpy as np
 import requests
-from app.core import ENDPOINT, MAX_BATCH_SIZE, PREDICTION_IMAGE_PATH
+from fastapi import APIRouter, Depends, File, UploadFile, HTTPException, Query
+from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
-from fastapi import File, UploadFile, APIRouter, Depends, HTTPException, Query
+
+# Local Application Imports
+from app.core import ENDPOINT, MAX_BATCH_SIZE, PREDICTION_IMAGE_PATH
 from app.database.database import get_db, db_dependency
 from app.models import Users, Predictions, Leaf_Diseases
-from app.services import get_current_user, read_files_as_images, RoleChecker, get_predictions_by_confirmation_status, get_prediction_by_id
 from app.schemas import ConfirmBatchPredictionRequest
-from fastapi.responses import FileResponse
+from app.services import (
+    get_current_user,
+    read_files_as_images,
+    RoleChecker,
+    get_predictions_by_confirmation_status,
+    get_prediction_by_id
+)
+
+
 
 router = APIRouter(
     prefix="/batch-predict",
@@ -29,6 +42,7 @@ async def predict(
     current_user: Users = Depends(get_current_user)
     ):
     
+    # Check if batch gets exceeded
     if len(files) > MAX_BATCH_SIZE:
         raise HTTPException(
             status_code=400,
@@ -41,7 +55,7 @@ async def predict(
     image_bytes_list = []
     filenames = []
 
-    # Save the uploaded files and store the bytes
+    # Save uploaded files and store the bytes
     for file in files:
         file_extension = Path(file.filename).suffix
         unique_filename = f"{uuid.uuid4()}{file_extension}"
@@ -54,7 +68,7 @@ async def predict(
         with open(save_path, "wb") as f:
             f.write(file_bytes)
 
-    # Convert images to a batch of numpy arrays for prediction
+    # Images to numpy arrays for prediction
     img_batch = read_files_as_images(image_bytes_list)
 
     json_data = {
@@ -75,7 +89,6 @@ async def predict(
         
         disease = db.query(Leaf_Diseases).filter(Leaf_Diseases.index == predicted_index).first()
 
-        # Skip if no disease is found for the prediction
         if disease:
             prediction_entry = Predictions(
                 user_id_fk=current_user.id,
@@ -89,7 +102,6 @@ async def predict(
             db.commit()
             db.refresh(prediction_entry)
 
-            # Store the prediction ID for later use (for reports or confirmation)
             prediction_ids.append(prediction_entry.id)
 
             results.append({
@@ -99,10 +111,9 @@ async def predict(
                 "pesticides": disease.pesticides
             })
 
-    # Return the results of the batch prediction
     return {
         "results": results,
-        "prediction_ids": prediction_ids  # You can return the prediction IDs if needed
+        "prediction_ids": prediction_ids
     }
 
 
@@ -130,6 +141,8 @@ async def confirm_prediction(
         "message": "Predictions confirmed successfully.",
         "confirmed_ids": [p.id for p in predictions]
     }
+
+
 
 # Filter unconfirmed predictions
 @router.get("/unconfirmed-predictions", dependencies=[Depends(farmer_only)])

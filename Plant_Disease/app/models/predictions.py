@@ -14,7 +14,6 @@ class Predictions(Base):
     confirmed = Column(Boolean, default=False, nullable=False)
     timestamp = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
-    # Add this at the bottom of the Predictions class
     reports = relationship(
         "Report",
         secondary="report_prediction_association",

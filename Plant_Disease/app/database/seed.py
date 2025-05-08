@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 from app.models.leaf_diseases import Leaf_Diseases
 
-# List must match your model output order (index 0-18)
 diseases = [
     {
         "index": 0,
@@ -141,7 +140,7 @@ diseases = [
 def seed_leaf_diseases(db: Session):
     existing = db.query(Leaf_Diseases).first()
     if existing:
-        return  # Already seeded
+        return 
     
     for d in diseases:
         exists = db.query(Leaf_Diseases).filter_by(index=d["index"]).first()

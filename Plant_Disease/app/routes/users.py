@@ -20,12 +20,13 @@ router = APIRouter(
     tags=["me"]
 )
 
-
+# Get User
 @router.get("/", response_model=UserOut)
 async def get_user(user = Depends(get_current_user)):
     return user
 
 
+# Update Username
 @router.put("/update-username", response_model=UserOut)
 async def update_username(
     request: UpdateUsernameRequest,
@@ -41,7 +42,7 @@ async def update_username(
 
 
 
-
+# Update Password
 @router.put("/update-current-password", response_model=UserOut)
 async def update_current_password(
     request: UpdatePasswordRequest,
@@ -57,7 +58,7 @@ async def update_current_password(
 
 
 
-
+# Update email
 @router.put("/update-email")
 async def update_email(
     request: UpdateEmailRequest,
@@ -87,7 +88,7 @@ async def update_email(
 
 
 
-
+# Confirm email change
 @router.get("/confirm-email-update")
 async def confirm_email_update(token: str, db: db_dependency):
     try:

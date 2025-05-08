@@ -22,6 +22,7 @@ async def generate_report(
     db: Session = Depends(get_db),
     current_user: Users = Depends(get_current_user)
 ):
+    # Get predictions data
     predictions = get_batch_predictions(db, data.prediction_id, current_user.id)
 
     if not predictions:
@@ -48,7 +49,6 @@ async def generate_report(
     report_filename = f"report_{uuid.uuid4()}.pdf"
     report_path = os.path.join(os.getcwd(), 'Plant_Disease', 'app', 'static', 'reports', report_filename)
 
-    # Ensure the directory exists before saving
     os.makedirs(os.path.dirname(report_path), exist_ok=True)
 
     generate_pdf(report_data, report_path)

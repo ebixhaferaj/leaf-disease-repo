@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 envPath= join(dirname(__file__), '..', '.env')
 
-# Load environment variables from .env file
+# LOAD ENVIRONMENT VARIABLES
 load_dotenv(dotenv_path=envPath)
 
 # DATABASE

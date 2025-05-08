@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from app.models import Predictions, Leaf_Diseases
 from sqlalchemy import asc, desc
 
+# Read Images
 def read_files_as_images(data_list: List[bytes]) -> np.ndarray:
     images = []
     for data in data_list:
@@ -14,7 +15,7 @@ def read_files_as_images(data_list: List[bytes]) -> np.ndarray:
         images.append(image_array)
     return np.stack(images)
 
-
+# Get Batch Predictions
 def get_batch_predictions(db: Session, ids: list[int], user_id: int):
     preds = (
         db.query(Predictions)
@@ -26,7 +27,7 @@ def get_batch_predictions(db: Session, ids: list[int], user_id: int):
         return None
     return preds
 
-
+# Filter prediction by confirmation
 def get_predictions_by_confirmation_status(db, user_id: int, confirmed: bool, order: str = "desc"):
     query = db.query(Predictions).filter(
         Predictions.confirmed == str(confirmed).lower(),
@@ -39,6 +40,7 @@ def get_predictions_by_confirmation_status(db, user_id: int, confirmed: bool, or
 
     return query.all()
 
+# Get a single prediction
 def get_prediction_by_id(db, user_id, prediction_id):
     query = (
         db.query(Predictions)

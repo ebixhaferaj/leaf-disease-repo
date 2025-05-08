@@ -20,9 +20,9 @@ def delete_old_unconfirmed_predictions():
 
         folder_path = PREDICTION_IMAGE_PATH
 
-        # Iterate through each old unconfirmed prediction and delete its image
+        # Iterate through old unconfirmed predictions and delete its image
         for prediction in old_predictions:
-            image_filename = prediction.image_url  # Assuming 'image_url' stores the image filename
+            image_filename = prediction.image_url
             image_path = os.path.join(folder_path, image_filename)
             if os.path.exists(image_path):
                 try:
@@ -31,7 +31,7 @@ def delete_old_unconfirmed_predictions():
                 except Exception as esc:
                     print(f"Error deleting image {image_filename}: {esc}")
 
-        # Now delete the records from the predictions table
+        # Deletion of the records from Predictions
         deleted = db.query(Predictions).filter(
             Predictions.confirmed == False,
             Predictions.timestamp < twenty_four_hours_ago
