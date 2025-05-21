@@ -5,6 +5,7 @@ from contextlib import asynccontextmanager
 from app.database import create_tables, seed_leaf_diseases, SessionLocal
 from app.scheduler.scheduler import scheduler
 from app.scheduler.scheduler import delete_old_unconfirmed_predictions
+from fastapi.middleware.cors import CORSMiddleware
 
 
 scheduler.add_job(delete_old_unconfirmed_predictions, 'interval', hours=1)
@@ -36,6 +37,15 @@ app.include_router(generate_report.router)
 app.include_router(users.router)
 app.include_router(report.router)
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # React's default port
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 @app.get("/")
 async def root():
     return {"message": "hello world"}
+
+

@@ -2,6 +2,7 @@
 from datetime import timedelta
 
 # Third-Party Libraries
+from fastapi.responses import RedirectResponse
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi.templating import Jinja2Templates
 from fastapi.security import OAuth2PasswordBearer
@@ -62,9 +63,12 @@ async def create_user(db: db_dependency, create_user_request: CreateUserRequest)
     validate_password(create_user_request.password)
 
     # Check if user exists
-    existing_user = db.query(Users).filter(Users.email == create_user_request.email).first()
-    if existing_user:
-        raise HTTPException(status_code=400, detail="Email already registered.")
+    existing_email = db.query(Users).filter(Users.email == create_user_request.email).first()
+    if existing_email:
+        raise HTTPException(status_code=409, detail="Email already registered.")
+    existing_username = db.query(Users).filter(Users.username == create_user_request.username).first()
+    if existing_username:
+        raise HTTPException(status_code=409, detail="Username taken.")
     
     create_user_model = Users(
         username=create_user_request.username,
@@ -107,18 +111,22 @@ async def verify_email(token: str, db: db_dependency):
     except HTTPException:
         raise
 
-    user = db.query(Users).filter(Users.email == email).first()
+    try:
+        user = db.query(Users).filter(Users.email == email).first()
 
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found.")
-    
-    if user.is_verified:
-        return {"message": "Email already verified."}
-    
-    user.is_verified = True
-    db.commit()
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found.")
+        
+        if user.is_verified:
+            return RedirectResponse(url="http://localhost:5173/verify-email?status=already_verified")
+        
+        user.is_verified = True
+        db.commit()
 
-    return {"message": "Email successfully verified."}
+        return RedirectResponse(url="http://localhost:5173/verify-email?status=success")
+
+    except jwt.ExpiredSignatureError:
+        return RedirectResponse(url="http://localhost:5173/verify-email?status=expired")
 
 # Login Token
 @router.post("/token", response_model=Token)
