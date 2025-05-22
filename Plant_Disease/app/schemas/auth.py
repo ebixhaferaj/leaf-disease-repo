@@ -10,11 +10,12 @@ class Token(BaseModel):
     access_token: str
     refresh_token: str
     token_type: str
+    role: str
 
 class LoginRequest(BaseModel):
     email: EmailStr
     password: str
-    role: str
+    # role: str
 
 class AccessTokenRequest(BaseModel):
     access_token: str

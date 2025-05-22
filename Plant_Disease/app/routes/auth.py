@@ -28,7 +28,8 @@ from app.core.config import (SECRET_KEY,
                              ALGORITHM, 
                              ACCESS_TOKEN_EXPIRE_MINUTES, 
                              DOMAIN, 
-                             REFRESH_TOKEN_EXPIRE_DAYS)
+                             REFRESH_TOKEN_EXPIRE_DAYS,
+                             FRONTEND_URL)
 from app.core import (hash_password, 
                       validate_password, 
                       create_access_token, 
@@ -134,14 +135,14 @@ async def login_for_access_token(
     login_data: LoginRequest,
     db: db_dependency):
 
-    user = authenticate_user(login_data.email, login_data.password, login_data.role, db)
+    user = authenticate_user(login_data.email, login_data.password, db)
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                             detail='Could not validate user.')
     access_token = create_access_token(user.email, user.id, user.role, timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
     refresh_token = create_refresh_token(user.email, user.id, user.role, timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS))
 
-    return {'access_token': access_token, 'refresh_token': refresh_token, 'token_type': 'bearer'}
+    return {'access_token': access_token, 'refresh_token': refresh_token, 'token_type': 'bearer', 'role': user.role}
 
 # Logout
 @router.post("/logout")
@@ -193,7 +194,7 @@ async def password_reset_request(email_data: PasswordResetRequest):
     token = create_url_safe_token({"email": email})
 
     # Generate the verification URL
-    verification_url = f"http://{DOMAIN}/auth/password-reset-confirm/{token}"
+    verification_url = f"http://{DOMAIN}/auth/get-password-reset-confirm/{token}"
 
     # Render the HTML template and pass verification URL
     html_content = templates.get_template("reset_password.html").render(verification_url=verification_url)
@@ -232,3 +233,7 @@ async def reset_account_password(
     update_user_password(db, user, password.new_password)
 
     return {"message": "Password updated successfully"}
+
+@router.get("/get-password-reset-confirm/{token}")
+async def redirect_to_frontend(token: str):
+    return RedirectResponse(url=f"{FRONTEND_URL}/reset-password/{token}")

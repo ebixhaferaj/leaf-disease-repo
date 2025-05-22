@@ -15,4 +15,5 @@ from .config import (ENDPOINT,
                      PREDICTION_IMAGE_PATH,
                      LOGO_PATH_FOR_PDF,
                      LOGO_NAME,
-                     REPORT_PATH)
+                     REPORT_PATH,
+                     FRONTEND_URL)

@@ -1,6 +1,6 @@
-import Register from "../components/Register";
+import ForgotPassword from "../components/ForgotPassword";
 
-const RegisterPage = () => {
+const ForgotPasswordPage = () => {
     return (
         <div className="bg-green-50 min-h-screen grid grid-cols-1 md:grid-cols-2">
         {/* Left Image Side with Diagonal Cut */}
@@ -20,11 +20,11 @@ const RegisterPage = () => {
         {/* Right Form Side */}
         <div className="bg-green-50 flex items-center justify-center px-6 py-12">
           <div className="w-full max-w-md">
-            <Register />
+            <ForgotPassword />
           </div>
         </div>
       </div>
     );
 };
 
-export default RegisterPage;
+export default ForgotPasswordPage;
