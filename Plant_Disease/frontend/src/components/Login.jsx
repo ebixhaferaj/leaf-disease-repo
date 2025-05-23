@@ -3,14 +3,15 @@ import { toast } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 import { useNavigate } from 'react-router-dom';
-import AuthContext from "../context/AuthProvider";
+import useAuth from "../hooks/useAuth";
 import instance from "../api/axios";
+import { Leaf } from 'lucide-react';
 
 const LOGIN_URL = '/auth/token';
 
 const Login = () => {
 
-    const { setAuth } = useContext(AuthContext);
+    const { setAuth } = useAuth();
     const userRef = useRef();
     const [loading, setLoading] = useState(false);
 
@@ -25,14 +26,6 @@ const Login = () => {
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (success) {
-            const timer = setTimeout(() => {
-                navigate('/');
-            },);
-            return () => clearTimeout(timer);
-        }
-    }, [success, navigate]);
 
     useEffect(() => {
         userRef.current.focus();
@@ -60,13 +53,29 @@ const Login = () => {
             // TODO: Handle saving the token / redirecting user
             const accessToken = response?.data.access_token;
             const refreshToken = response?.data.refresh_token;
+            
             const role = response?.data?.role;
-            setAuth({ email, role, accessToken })
+            const roles = Array.isArray(role) ? role : [role];
+
+            setAuth({ 
+                email, 
+                roles, 
+                accessToken })
+                
             console.log({setAuth})
             localStorage.setItem("accessToken", accessToken);
             localStorage.setItem("refreshToken", refreshToken);
-            localStorage.setItem("role", role);
+            localStorage.setItem("role", JSON.stringify(roles));
             localStorage.setItem("email", email);
+
+            if (roles.includes('farmer')) {
+                navigate('/farmer/home');
+            } else if (roles.includes('user')) {
+                navigate('/user/home');
+            } else {
+                navigate('/');
+            }
+
         } catch (err) {
             if (!err?.response) {
                 toast.error("No Server Response");
@@ -86,14 +95,12 @@ const Login = () => {
             <section className="max-w-md mx-auto p-8 mt-12 flex flex-col items-center justify-center space-y-4 font-inter">
                 <ClipLoader color="#2F855A" loading={loading} size={35} />
             </section>
-            ) : success ? (
-                <h1></h1>
             ) : (
-            <section className="max-w-md mx-auto mt-12 p-8 bg-white rounded-lg shadow-lg">
-                <h1 className="text-4xl font-extrabold mb-8 text-center text-green-800 font-inter tracking-wide">
+            <section className="max-w-sm mx-auto mt-6 p-6 bg-white rounded-lg shadow-lg">
+                <h1 className="text-4xl font-extrabold mb-6 text-center text-leaf-800 font-inter tracking-wide">
                     Welcome back, plant saver!
                 </h1>
-                <form onSubmit={handleSubmit} className="flex flex-col space-y-8">
+                <form onSubmit={handleSubmit} className="flex flex-col space-y-5">
                     {/* Email */}
                     <div>
                         <label htmlFor="email" className="block font-semibold mb-2 text-gray-900 font-inter items-center">
@@ -109,7 +116,7 @@ const Login = () => {
                             required
                             onFocus={() => setUserFocus(true)}
                             onBlur={() => setUserFocus(false)}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-3 focus:ring-green-400 transition-shadow duration-200"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-3 focus:ring-leaf-400 transition-shadow duration-200"
                         />
                     </div>
 
@@ -126,12 +133,12 @@ const Login = () => {
                             required
                             onFocus={() => setPwdFocus(true)}
                             onBlur={() => setPwdFocus(false)}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-3 focus:ring-green-400 transition-shadow duration-200"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-3 focus:ring-leaf-400 transition-shadow duration-200"
                         />
 
                     </div>
                     <button
-                        className={"bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 cursor-pointer w-full py-3 rounded-md text-white font-semibold transition"}
+                        className={"bg-leaf-700 hover:bg-leaf-800 focus:ring-4 focus:ring-leaf-300 cursor-pointer w-full py-2 rounded-md text-white font-semibold transition"}
                     >
                         Log In
                     </button>
@@ -143,7 +150,7 @@ const Login = () => {
                 </div>
                 <p className="pt-5 text-sm text-center text-gray-600">
                     Don't have an account?{' '}
-                    <Link to="/register" className="text-green-700 hover:underline font-medium">
+                    <Link to="/register" className="text-leaf-700 hover:underline font-medium">
                         Register
                     </Link>
                 </p>

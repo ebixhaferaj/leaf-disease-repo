@@ -1,11 +1,12 @@
 import { NavLink } from 'react-router-dom'
 import React, { useState, useEffect } from 'react'
 import QuoteRotator from './QuoteRotator'
-
-
+import LogoutButton from './LogoutButton'
+import useAuth from '../hooks/useAuth'
 
 const Navbar = () => {
-
+  const { auth } = useAuth(); 
+  
   const linkClass = ({ isActive }) =>
     isActive
       ? 'bg-green-700 text-white hover:bg-green-800 hover:text-white rounded-md px-4 py-2 font-semibold'
@@ -22,7 +23,7 @@ const Navbar = () => {
         style={{ fontFamily: "'Inter', sans-serif" }}
       >
         <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center text-white font-bold text-lg">
-          <img src="/images/logo.png" alt="Logo" />
+          <img src="/images/logo_no_name.png" alt="Logo" />
         </div>
         <span>
           <QuoteRotator/>
@@ -40,6 +41,9 @@ const Navbar = () => {
               <NavLink to="/add-job" className={linkClass}>
                 My Account
               </NavLink>
+              {auth?.accessToken && (
+                <LogoutButton />
+              )}
             </div>
           </div>
         </div>

@@ -1,67 +1,50 @@
 import { useRef, useState, useEffect } from "react";
-import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { toast } from 'react-hot-toast';
-import { ClipLoader } from 'react-spinners';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { toast } from "react-hot-toast";
+import { ClipLoader } from "react-spinners";
+import { useNavigate, Link } from "react-router-dom";
 import instance from "../api/axios";
-
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PASSWORD_REGEX = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-const REGISTER_URL = '/auth';
+const REGISTER_URL = "/auth";
 
 const Register = () => {
-    const [loading, setLoading] = useState(false);
-
     const userRef = useRef();
     const errRef = useRef();
+    const navigate = useNavigate();
 
+    const [loading, setLoading] = useState(false);
     const [backendMsg, setBackendMsg] = useState("");
 
-    const [username, setUsername] = useState('');
-    const [role, setRole] = useState('user');
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState("");
+    const [role, setRole] = useState("user");
+    const [email, setEmail] = useState("");
     const [validEmail, setValidEmail] = useState(false);
     const [userFocus, setUserFocus] = useState(false);
 
-    const [pwd, setPwd] = useState('');
+    const [pwd, setPwd] = useState("");
     const [validPwd, setValidPwd] = useState(false);
     const [pwdFocus, setPwdFocus] = useState(false);
 
-    const [matchPwd, setMatchPwd] = useState('');
+    const [matchPwd, setMatchPwd] = useState("");
     const [validMatch, setValidMatch] = useState(false);
     const [matchFocus, setMatchFocus] = useState(false);
 
-    const [errMsg, setErrMsg] = useState('');
+    const [errMsg, setErrMsg] = useState("");
     const [success, setSuccess] = useState(false);
 
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        userRef.current.focus();
-    }, []);
-
-    useEffect(() => {
-        setValidEmail(EMAIL_REGEX.test(email));
-    }, [email]);
-
+    useEffect(() => userRef.current?.focus(), []);
+    useEffect(() => setValidEmail(EMAIL_REGEX.test(email)), [email]);
     useEffect(() => {
         setValidPwd(PASSWORD_REGEX.test(pwd));
         setValidMatch(pwd === matchPwd);
     }, [pwd, matchPwd]);
-
-    useEffect(() => {
-        setErrMsg('');
-    }, [email, pwd, matchPwd]);
-
+    useEffect(() => setErrMsg(""), [email, pwd, matchPwd]);
     useEffect(() => {
         if (success) {
-            const timer = setTimeout(() => {
-                navigate('/login');
-            }, 5000);
+            const timer = setTimeout(() => navigate("/login"), 5000);
             return () => clearTimeout(timer);
         }
     }, [success, navigate]);
@@ -69,22 +52,18 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setErrMsg('');
-        const v1 = EMAIL_REGEX.test(email);
-        const v2 = PASSWORD_REGEX.test(pwd);
-        if (!v1 || !v2) {
+        setErrMsg("");
+
+        if (!EMAIL_REGEX.test(email) || !PASSWORD_REGEX.test(pwd)) {
             setErrMsg("Invalid Entry");
+            setLoading(false);
             return;
         }
+
         try {
             const response = await instance.post(
                 REGISTER_URL,
-                JSON.stringify({
-                    username,
-                    email,
-                    password: pwd,
-                    role,
-                }),
+                JSON.stringify({ username, email, password: pwd, role }),
                 {
                     headers: { "Content-Type": "application/json" },
                     withCredentials: true,
@@ -97,7 +76,6 @@ const Register = () => {
                 toast.error("No Server Response");
             } else if (err.response?.status === 409) {
                 const errorDetail = err.response.data?.detail;
-
                 if (typeof errorDetail === "string") {
                     if (errorDetail.toLowerCase().includes("username")) {
                         toast.error("Username already taken.");
@@ -117,31 +95,26 @@ const Register = () => {
         }
     };
 
-
     return (
         <>
-        {loading ? (
-            <section className="max-w-md mx-auto p-8 mt-12 flex flex-col items-center justify-center space-y-4 font-inter">
+            {loading ? (
+                <section className="max-w-sm mx-auto p-8 mt-12 flex flex-col items-center justify-center space-y-4 font-inter">
                     <ClipLoader color="#2F855A" loading={loading} size={35} />
-            </section>
-        ): success ? (
-                <section className="max-w-md mx-auto p-8 mt-12 flex flex-col items-center justify-center space-y-4 font-inter">     
-                    <p className="text-green-700 font-semibold text-center">{backendMsg}</p>
+                </section>
+            ) : success ? (
+                <section className="max-w-md mx-auto p-8 mt-12 flex flex-col items-center justify-center space-y-4 font-inter">
+                    <p className="text-leaf-700 font-semibold text-center">{backendMsg}</p>
                     <p className="text-gray-600 text-center">Redirecting to login page...</p>
                 </section>
             ) : (
-                <section className="max-w-md mx-auto p-8 mt-12 bg-white rounded-lg shadow-lg">
-                    <p
-                        ref={errRef}
-                        className={`${errMsg ? "text-red-600 mb-4" : "hidden"}`}
-                        aria-live="assertive"
-                    >
+                <section className="max-w-sm mx-auto mt-6 p-6 bg-white rounded-lg shadow-lg">
+                    <p ref={errRef} className={`${errMsg ? "text-red-600 mb-4" : "hidden"}`} aria-live="assertive">
                         {errMsg}
                     </p>
-                    <h1 className="text-3xl font-bold mb-6 text-center text-green-800 tracking-wide">
+                    <h1 className="text-4xl font-bold mb-6 text-center text-leaf-800 tracking-wide">
                         Register
                     </h1>
-                    <form onSubmit={handleSubmit} className="flex flex-col space-y-6">
+                    <form onSubmit={handleSubmit} className="flex flex-col space-y-5">
                         {/* Username */}
                         <div>
                             <label htmlFor="username" className="block font-medium mb-1 text-gray-900">
@@ -153,7 +126,7 @@ const Register = () => {
                                 autoComplete="off"
                                 onChange={(e) => setUsername(e.target.value)}
                                 required
-                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400 transition"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-leaf-400 transition"
                             />
                         </div>
 
@@ -161,7 +134,7 @@ const Register = () => {
                         <div>
                             <label htmlFor="email" className="block font-medium mb-1 text-gray-900">
                                 Email:
-                                <span className={`${validEmail ? "text-green-700 ml-1" : "hidden"}`}>
+                                <span className={`${validEmail ? "text-leaf-700 ml-1" : "hidden"}`}>
                                     <FontAwesomeIcon icon={faCheck} />
                                 </span>
                                 <span className={`${validEmail || !email ? "hidden" : "text-red-600 ml-1"}`}>
@@ -179,7 +152,7 @@ const Register = () => {
                                 aria-describedby="uidnote"
                                 onFocus={() => setUserFocus(true)}
                                 onBlur={() => setUserFocus(false)}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400 transition"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-leaf-400 transition"
                             />
                             <p
                                 id="uidnote"
@@ -194,7 +167,7 @@ const Register = () => {
                         <div>
                             <label htmlFor="password" className="block font-medium mb-1 text-gray-900">
                                 Password:
-                                <span className={`${validPwd ? "text-green-700 ml-1" : "hidden"}`}>
+                                <span className={`${validPwd ? "text-leaf-700 ml-1" : "hidden"}`}>
                                     <FontAwesomeIcon icon={faCheck} />
                                 </span>
                                 <span className={`${validPwd || !pwd ? "hidden" : "text-red-600 ml-1"}`}>
@@ -208,13 +181,11 @@ const Register = () => {
                                 required
                                 onFocus={() => setPwdFocus(true)}
                                 onBlur={() => setPwdFocus(false)}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400 transition"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-leaf-400 transition"
                             />
-                            <p
-                                className={`${pwdFocus && !validPwd ? "text-sm text-gray-500 mt-1" : "hidden"}`}
-                            >
+                            <p className={`${pwdFocus && !validPwd ? "text-sm text-gray-500 mt-1" : "hidden"}`}>
                                 <FontAwesomeIcon icon={faInfoCircle} className="mr-1" />
-                                8+ characters, upper & lower case, digit, and symbol '!, $, #'
+                                8+ characters, upper & lower case, digit, and symbol '@$!%*?&'
                             </p>
                         </div>
 
@@ -222,7 +193,7 @@ const Register = () => {
                         <div>
                             <label htmlFor="confirm_pwd" className="block font-medium mb-1 text-gray-900">
                                 Confirm Password:
-                                <span className={`${validMatch && matchPwd ? "text-green-700 ml-1" : "hidden"}`}>
+                                <span className={`${validMatch && matchPwd ? "text-leaf-700 ml-1" : "hidden"}`}>
                                     <FontAwesomeIcon icon={faCheck} />
                                 </span>
                                 <span className={`${validMatch || !matchPwd ? "hidden" : "text-red-600 ml-1"}`}>
@@ -236,17 +207,15 @@ const Register = () => {
                                 required
                                 onFocus={() => setMatchFocus(true)}
                                 onBlur={() => setMatchFocus(false)}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400 transition"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-leaf-400 transition"
                             />
-                            <p
-                                className={`${matchFocus && !validMatch ? "text-sm text-gray-500 mt-1" : "hidden"}`}
-                            >
+                            <p className={`${matchFocus && !validMatch ? "text-sm text-gray-500 mt-1" : "hidden"}`}>
                                 <FontAwesomeIcon icon={faInfoCircle} className="mr-1" />
                                 Must match the password above.
                             </p>
                         </div>
 
-                        {/* Role */}
+                        {/* Role Buttons */}
                         <label className="block font-medium mb-2 text-gray-900">
                             What best describes you?
                         </label>
@@ -257,36 +226,28 @@ const Register = () => {
                                     type="button"
                                     onClick={() => setRole(option)}
                                     className={`px-5 py-2 rounded-lg border text-sm font-medium transition
-                                    ${
-                                        role === option
-                                            ? "bg-green-700 text-white border-green-700"
-                                            : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
-                                    }`}
+                                        ${
+                                            role === option
+                                                ? "bg-leaf-700 text-white border-leaf-700"
+                                                : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
+                                        }`}
                                 >
                                     {option === "user" ? "Regular User" : "Farmer"}
                                 </button>
                             ))}
                         </div>
 
-                        <input type="hidden" name="role" value={role} />
-
-                        {/* Submit button */}
                         <button
-                            disabled={!validEmail || !validPwd || !validMatch}
-                            className={`w-full py-3 rounded-md text-white font-semibold transition
-                            ${
-                                validEmail && validPwd && validMatch
-                                    ? "bg-green-700 hover:bg-green-800"
-                                    : "bg-gray-400 cursor-not-allowed"
-                            }`}
+                            type="submit"
+                            className="mt-4 bg-leaf-700 text-white py-2 px-4 rounded-md hover:bg-leaf-800 transition"
                         >
-                            Sign Up
+                            Register
                         </button>
                     </form>
-                    <p className="pt-5 text-sm text-center text-gray-600">
-                        Already have an account?{' '}
-                        <Link to="/login" className="text-green-700 hover:underline font-medium">
-                          Log In
+                    <p className="mt-4 text-sm text-gray-700 text-center">
+                        Already registered?{" "}
+                        <Link to="/login" className="text-leaf-700 font-medium hover:underline">
+                            Sign In
                         </Link>
                     </p>
                 </section>

@@ -1,14 +1,17 @@
-import { Navigate, useLocation } from 'react-router-dom'
+import { Navigate, useLocation, Outlet } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
 
-const RequireAuth = ({ children }) => {
-  const token = localStorage.getItem('access_token') // or use your context/auth state
-  const location = useLocation()
+const RequireAuth = ({ allowedRoles }) => {
+  const { auth } = useAuth();
+  const location = useLocation();
 
-  if (!token) {
-    return <Navigate to="/login" state={{ from: location }} replace />
-  }
+  return (
+    auth?.roles?.some(role => allowedRoles.includes(role))
+      ? <Outlet />
+      : auth?.accessToken
+        ? <Navigate to="/unauthorized" state={{ from: location }} replace />
+        : <Navigate to="/login" state={{ from: location }} replace />
+  );
+};
 
-  return children
-}
-
-export default RequireAuth
+export default RequireAuth;

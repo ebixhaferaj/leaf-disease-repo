@@ -6,10 +6,14 @@ import VerifyEmailPage from './pages/VerifyEmailPage'
 import LoginPage from './pages/LoginPage';
 import { Toaster } from 'react-hot-toast';
 import MainLayout from './layouts/MainLayout';
+import RequireAuth from './components/RequireAuth';
+import HomePageFarmer from './pages/HomePageFarmer';
+import HomePageUser from './pages/HomePageUser';
 import HomePage from './pages/HomePage';
-import RequireAuth from './components/RequireAuth'
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
 import ResetPasswordPage from './pages/ResetPasswordPage';
+import NotFoundPage from './pages/NotFoundPage';
+import RedirectIfLoggedIn from './components/RedirectIfLoggedIn';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -19,20 +23,30 @@ function App() {
     <Router>
       <Toaster position="top-right" />
       <Routes>
+        {/* public routes */}
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/verify-email" element={<VerifyEmailPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route 
+          path="/login" element={<LoginPage/>} />
         <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
-        <Route path="/" element = {<MainLayout/>}>
-          <Route index element={<HomePage />} />
-          <Route path="/account" element={
-            <RequireAuth>
+        <Route path="/" element={<HomePage/>}/>
 
-            </RequireAuth>}
-            />
+
+        {/* protected routes */}
+        <Route element = {<MainLayout/>}>
+          {/* User Home */}
+          <Route element={<RequireAuth allowedRoles={['user']}/>}>
+            <Route path='user/home' element={<HomePageUser />} />
+          </Route>
+          {/* Farner Home */}
+          <Route element={<RequireAuth allowedRoles={['farmer']}/>}>
+            <Route path='farmer/home' element={<HomePageFarmer />} />
+          </Route>
         </Route>
-        {/* other routes */}
+
+        {/* catch all */}
+        <Route path="*" element={<NotFoundPage/>}/>
       </Routes>
     </Router>
   )

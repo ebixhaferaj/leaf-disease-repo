@@ -57,7 +57,7 @@ const ResetPassword = () => {
         try {
             const response = await instance.post(
                 `/auth/password-reset-confirm/${token}`,
-                JSON.stringify({ password: pwd }),
+                JSON.stringify({ new_password: pwd, confirm_password: matchPwd }),
                 {
                     headers: { "Content-Type": "application/json" },
                     withCredentials: true,

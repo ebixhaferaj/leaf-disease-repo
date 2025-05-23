@@ -1,70 +1,74 @@
-import React, { useState } from 'react';
 
-const Hero = ({ title, subtitle }) => {
-  const [file, setFile] = useState(null);
-  const [prediction, setPrediction] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+import { useState } from 'react';
+import { Leaf } from 'lucide-react';
+import { motion } from 'framer-motion';
+import UploadDropzone from './UploadDropzone';
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-    setPrediction(null);
-    setError(null);
-  };
-
-  const handleSubmit = async () => {
-    if (!file) return setError('Please upload an image first.');
-    setLoading(true);
-    setError(null);
-
-    // Simulate API call
-    try {
-      // Here you would send the file to your backend API for prediction
-      // For demo, just fake a response after 2s
-      await new Promise((res) => setTimeout(res, 2000));
-      setPrediction({
-        disease: 'Powdery Mildew',
-        confidence: 92.5,
-      });
-    } catch (err) {
-      setError('Prediction failed. Try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
+const Hero = () => {
+  const [showUpload, setShowUpload] = useState(false);
+  
   return (
-    <section className="bg-green-600 py-16 mb-6">
-      <div className="max-w-7xl mx-auto px-6 text-center">
-        <h1 className="text-5xl font-extrabold text-white drop-shadow-md mb-4">{title}</h1>
-        <p className="text-xl text-green-100 mb-8">{subtitle}</p>
-
-        <div className="bg-green-50 rounded-lg p-6 max-w-md mx-auto shadow-lg">
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-            className="block w-full mb-4 p-2 border border-green-300 rounded focus:outline-none focus:ring-2 focus:ring-green-400"
-          />
-          <button
-            onClick={handleSubmit}
-            disabled={loading}
-            className="w-full bg-green-600 text-white py-3 rounded font-semibold hover:bg-green-800 transition-colors"
-          >
-            {loading ? 'Predicting...' : 'Predict Now'}
-          </button>
-
-          {error && <p className="mt-3 text-red-600 font-medium">{error}</p>}
-
-          {prediction && (
-            <div className="mt-4 bg-green-100 text-green-900 rounded p-4 shadow-inner">
-              <p className="font-bold text-lg">Prediction Result:</p>
-              <p>Disease: <span className="font-semibold">{prediction.disease}</span></p>
-              <p>Confidence: <span className="font-semibold">{prediction.confidence}%</span></p>
-            </div>
-          )}
-        </div>
+    <section className="relative min-h-[85vh] flex flex-col justify-center items-center py-12 px-4">
+      {/* Background decoration */}
+      <div className="absolute inset-0 overflow-hidden -z-10">
+        <div className="absolute -top-10 -left-10 w-64 h-64 bg-leaf-100 rounded-full blur-3xl opacity-30"></div>
+        <div className="absolute top-1/4 right-0 w-80 h-80 bg-accent rounded-full blur-3xl opacity-20"></div>
+        <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-leaf-200 rounded-full blur-3xl opacity-20"></div>
       </div>
+      
+      <div className="text-center max-w-3xl mx-auto mb-8">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="flex justify-center mb-6"
+        >
+          <div className="w-20 h-10 bg-white rounded-full flex items-center justify-center text-white font-bold text-sm">
+            <img src="/images/logo_no_name.png" alt="Logo" />
+          </div>
+        </motion.div>
+        
+        <motion.h1 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="text-4xl md:text-5xl font-bold tracking-tight mb-4"
+        >
+          Turn every leaf into insight
+        </motion.h1>
+        
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="text-lg md:text-xl text-muted-foreground mb-8"
+        >
+          Upload a plant photo, and our AI instantly spots diseases and suggests treatments — no sign-up required.
+        </motion.p>
+        
+        {!showUpload && (
+          <motion.button
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            onClick={() => setShowUpload(true)}
+            className="bg-leaf-600 hover:bg-leaf-700 text-white font-medium py-3 px-8 rounded-lg transition-all transform hover:scale-105"
+          >
+            Try it now
+          </motion.button>
+        )}
+      </div>
+      
+      {showUpload && (
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="w-full max-w-2xl"
+        >
+          <UploadDropzone />
+        </motion.div>
+      )}
     </section>
   );
 };
