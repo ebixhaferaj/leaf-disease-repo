@@ -17,5 +17,6 @@ class Predictions(Base):
     reports = relationship(
         "Report",
         secondary="report_prediction_association",
-        back_populates="predictions"
+        back_populates="predictions",
+        passive_deletes=True
     )

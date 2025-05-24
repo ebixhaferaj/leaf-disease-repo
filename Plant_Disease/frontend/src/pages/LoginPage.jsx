@@ -12,7 +12,7 @@ const LoginPage = () => {
       }}
     >
       <img
-        src="../images/background.png" // adjust path if needed
+        src="../images/background2.png" // adjust path if needed
         alt="Nature background"
         className="w-full h-full object-cover"
       />

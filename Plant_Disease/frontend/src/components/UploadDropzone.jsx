@@ -3,11 +3,12 @@ import { Image, Upload, ArrowUp } from 'lucide-react';
 import { motion } from 'framer-motion';
 import PlantAnalysisResult from './PlantAnalysisResult';
 
-const UploadDropzone = () => {
+const UploadDropzone = ({ apiUrl, formFieldName, token = null, onResult = () => {} }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisComplete, setAnalysisComplete] = useState(false);
+  const [predictionData, setPredictionData] = useState(null);
 
   const toast = (title, description) => {
     alert(`${title}\n${description}`);
@@ -53,12 +54,12 @@ const UploadDropzone = () => {
     const file = files[0];
 
     if (!file.type.startsWith('image/')) {
-      toast("Unsupported File", "Please upload an image file (PNG, JPG, etc.)");
+      toast('Unsupported File', 'Please upload an image file (.PNG)');
       return;
     }
 
     if (file.size > 10 * 1024 * 1024) {
-      toast("File Too Large", "Please upload an image smaller than 10MB");
+      toast('File Too Large', 'Please upload an image smaller than 10MB');
       return;
     }
 
@@ -66,18 +67,42 @@ const UploadDropzone = () => {
     reader.onload = (event) => {
       if (event.target && typeof event.target.result === 'string') {
         setSelectedImage(event.target.result);
-        simulateAnalysis();
+        analyzeImage(file); // api call
       }
     };
     reader.readAsDataURL(file);
   };
 
-  const simulateAnalysis = () => {
+  const analyzeImage = async (file) => {
     setIsAnalyzing(true);
-    setTimeout(() => {
-      setIsAnalyzing(false);
+    const formData = new FormData();
+    formData.append(formFieldName, file);
+
+    try {
+      const headers = {};
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        body: formData,
+        headers, // add headers here (Authorization if token present)
+      });
+
+      if (!response.ok) throw new Error('Failed to analyze image');
+
+      const data = await response.json();
+      setPredictionData(data);
       setAnalysisComplete(true);
-    }, 2500);
+
+      onResult(data);
+    } catch (error) {
+      console.error('Prediction error:', error);
+      toast('Analysis Failed', 'Unable to analyze the image.');
+    } finally {
+      setIsAnalyzing(false);
+    }
   };
 
   const resetAnalysis = () => {
@@ -86,8 +111,14 @@ const UploadDropzone = () => {
     setAnalysisComplete(false);
   };
 
-  if (analysisComplete && selectedImage) {
-    return <PlantAnalysisResult imageUrl={selectedImage} onReset={resetAnalysis} />;
+  if (analysisComplete && selectedImage && predictionData) {
+    return (
+      <PlantAnalysisResult
+        imageUrl={selectedImage}
+        analysisData={predictionData}
+        onReset={resetAnalysis}
+      />
+    );
   }
 
   return (
@@ -105,8 +136,8 @@ const UploadDropzone = () => {
         className={`
           border-2 border-dashed rounded-xl p-8 flex flex-col items-center justify-center text-center transition-all duration-200 
           bg-white/80 backdrop-blur-sm 
-          ${isDragging ? "border-green-500 bg-green-50" : "border-gray-300"} 
-          ${isAnalyzing ? "opacity-75" : "hover:bg-green-50/50"}
+          ${isDragging ? 'border-green-500 bg-green-50' : 'border-gray-300'} 
+          ${isAnalyzing ? 'opacity-75' : 'hover:bg-green-50/50'}
         `}
       >
         {isAnalyzing ? (
@@ -141,7 +172,7 @@ const UploadDropzone = () => {
               />
             </label>
             <p className="mt-6 text-xs text-gray-500">
-              Supported formats: JPG, PNG, GIF • Max size: 10MB
+              Supported format: PNG, Max size: 10MB
             </p>
           </>
         )}

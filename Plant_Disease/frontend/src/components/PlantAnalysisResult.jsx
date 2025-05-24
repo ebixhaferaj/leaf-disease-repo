@@ -2,33 +2,33 @@ import React from 'react';
 import { Leaf, ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-const mockAnalysisData = {
-  disease: "Powdery Mildew",
-  confidence: 89,
-  description: "Powdery mildew is a fungal disease that affects a wide range of plants...",
-  treatments: [
-    {
-      name: "Neem Oil Spray",
-      description: "Apply neem oil solution to affected areas once a week..."
-    },
-    {
-      name: "Improve Air Circulation",
-      description: "Prune the plant to improve air flow..."
-    },
-    {
-      name: "Baking Soda Solution",
-      description: "Mix 1 tbsp baking soda with 1 gallon of water..."
-    }
-  ],
-  preventionTips: [
-    "Avoid overhead watering; water at the base of plants",
-    "Space plants properly for adequate air circulation",
-    "Remove and dispose of infected plant debris",
-    "Use resistant plant varieties when available"
-  ]
-};
+//const mockAnalysisData = {
+//  disease: "Powdery Mildew",
+//  confidence: 89,
+//  description: "Powdery mildew is a fungal disease that affects a wide range of plants...",
+//  treatments: [
+//    {
+//      name: "Neem Oil Spray",
+//      description: "Apply neem oil solution to affected areas once a week..."
+//    },
+//    {
+//      name: "Improve Air Circulation",
+//      description: "Prune the plant to improve air flow..."
+//    },
+//    {
+//      name: "Baking Soda Solution",
+//      description: "Mix 1 tbsp baking soda with 1 gallon of water..."
+//    }
+//  ],
+//  preventionTips: [
+//    "Avoid overhead watering; water at the base of plants",
+//    "Space plants properly for adequate air circulation",
+//    "Remove and dispose of infected plant debris",
+//    "Use resistant plant varieties when available"
+//  ]
+//};
 
-const PlantAnalysisResult = ({ imageUrl, onReset }) => {
+const PlantAnalysisResult = ({ imageUrl, analysisData, onReset }) => {
   return (
     <motion.div
       className="w-full bg-white rounded-xl overflow-hidden shadow-lg"
@@ -57,15 +57,15 @@ const PlantAnalysisResult = ({ imageUrl, onReset }) => {
             <div className="flex items-center">
               <Leaf className="h-7 w-7 text-leaf-300 mr-3" />
               <div>
-                <h3 className="font-medium text-xl">{mockAnalysisData.disease}</h3>
+                <h3 className="font-medium text-xl">{analysisData.disease_name}</h3>
                 <div className="flex items-center mt-1">
                   <div className="w-full max-w-36 bg-white/30 rounded-full h-2 overflow-hidden">
                     <div
                       className="bg-green-400 h-full rounded-full"
-                      style={{ width: `${mockAnalysisData.confidence}%` }}
+                      style={{ width: `${Math.round(analysisData.confidence * 1000) / 10}%` }}
                     />
                   </div>
-                  <span className="ml-2 text-sm">{mockAnalysisData.confidence}% confidence</span>
+                  <span className="ml-2 text-sm">{analysisData.confidence * 100}% confidence</span>
                 </div>
               </div>
             </div>
@@ -74,10 +74,10 @@ const PlantAnalysisResult = ({ imageUrl, onReset }) => {
 
         {/* Info section */}
         <div className="md:w-3/5 p-6 md:p-8 max-h-[600px] overflow-y-auto">
-          <h2 className="text-2xl font-bold mb-4">Analysis Results</h2>
-          <p className="text-gray-600 mb-6">{mockAnalysisData.description}</p>
+          <h2 className="text-2xl font-bold mb-4">Disease Description</h2>
+          <p className="text-gray-600 mb-6">{analysisData.description}</p>
 
-          {/* Treatments */}
+          {/* Treatments 
           <div className="mb-6">
             <h3 className="text-lg font-semibold mb-3">Recommended Treatments</h3>
             <div className="space-y-4">
@@ -91,12 +91,12 @@ const PlantAnalysisResult = ({ imageUrl, onReset }) => {
                 </div>
               ))}
             </div>
-          </div>
+          </div>*/}
 
           {/* Separator */}
           <div className="border-t my-6" />
 
-          {/* Prevention Tips */}
+          {/* Prevention Tips 
           <div>
             <h3 className="text-lg font-semibold mb-3">Prevention Tips</h3>
             <ul className="list-disc list-inside space-y-2 text-gray-600">
@@ -105,6 +105,7 @@ const PlantAnalysisResult = ({ imageUrl, onReset }) => {
               ))}
             </ul>
           </div>
+          */}
 
           {/* Footer note */}
           <div className="mt-8 pt-4 border-t">

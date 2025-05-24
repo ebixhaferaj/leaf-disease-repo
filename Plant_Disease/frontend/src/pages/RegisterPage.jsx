@@ -11,7 +11,7 @@ const RegisterPage = () => {
           }}
         >
           <img
-            src="../images/background.png"
+            src="../images/background2.png"
             alt="Nature background"
             className="w-full h-full object-cover"
           />

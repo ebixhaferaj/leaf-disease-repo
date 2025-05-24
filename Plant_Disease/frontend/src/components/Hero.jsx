@@ -66,7 +66,9 @@ const Hero = () => {
           transition={{ duration: 0.5 }}
           className="w-full max-w-2xl"
         >
-          <UploadDropzone />
+          <UploadDropzone  
+            apiUrl="http://localhost:8000/guest-predict" 
+            formFieldName="file" />
         </motion.div>
       )}
     </section>

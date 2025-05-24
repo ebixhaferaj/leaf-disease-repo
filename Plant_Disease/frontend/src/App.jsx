@@ -14,6 +14,8 @@ import ForgotPasswordPage from './pages/ForgotPasswordPage'
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import NotFoundPage from './pages/NotFoundPage';
 import RedirectIfLoggedIn from './components/RedirectIfLoggedIn';
+import FarmerLayout from './layouts/FarmerLayout';
+import FarmerPredictionPage from './pages/FarmerPredictionPage';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -32,18 +34,21 @@ function App() {
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
         <Route path="/" element={<HomePage/>}/>
 
-
         {/* protected routes */}
+          {/* User  */}
         <Route element = {<MainLayout/>}>
-          {/* User Home */}
           <Route element={<RequireAuth allowedRoles={['user']}/>}>
-            <Route path='user/home' element={<HomePageUser />} />
-          </Route>
-          {/* Farner Home */}
-          <Route element={<RequireAuth allowedRoles={['farmer']}/>}>
-            <Route path='farmer/home' element={<HomePageFarmer />} />
+          <Route path='user/home' element={<HomePageUser />} />
           </Route>
         </Route>
+          {/* Farmer */}
+        <Route element = {<FarmerLayout/>}>
+          <Route element={<RequireAuth allowedRoles={['farmer']}/>}>
+            <Route path='farmer/home' element={<HomePageFarmer />} />
+            <Route path='farmer/predictions' element={<FarmerPredictionPage/>}/>
+          </Route>
+        </Route>
+
 
         {/* catch all */}
         <Route path="*" element={<NotFoundPage/>}/>
