@@ -11,6 +11,7 @@ class Token(BaseModel):
     refresh_token: str
     token_type: str
     role: str
+    user_id: int
 
 class LoginRequest(BaseModel):
     email: EmailStr

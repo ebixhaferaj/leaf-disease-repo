@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Upload, FileText, Download } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
-import UploadDropzone from './UploadDropzone';
+import BatchUploadDropzone from './BatchUploadDropzone';
+import BatchAnalysisResult from './BatchAnalysisResult'
+import UploadDropzone from './UploadDropzone'
+import PlantAnalysisResult from './PlantAnalysisResult';
 
 const statsData = [
   { title: 'Total Reports', value: '12', icon: FileText },
@@ -16,9 +19,20 @@ const diseaseData = [
   { name: 'Bean Leaf Spot', value: 20, color: '#22c55e' }
 ];
 
-const token = localStorage.getItem('accessToken')
+
 
 const Dashboard = () => {
+  
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [results, setResults] = useState([]);
+  
+  const token = localStorage.getItem('accessToken')
+  console.log({token})
+  
+  const handleResult = (predictionData) => {
+    console.log("Single analysis result received:", predictionData);
+  };
+
   return (
     <div className="p-6 space-y-6 flex-1">
       {/* Welcome Section */}
@@ -37,14 +51,14 @@ const Dashboard = () => {
             <h2 className="text-lg font-semibold">Upload Plant Images</h2>
           </div>
 
-            <UploadDropzone
-              apiUrl="http://localhost:8000/batch-predict"
-              formFieldName="files" 
-              token={token}/>
-
+          <BatchUploadDropzone  
+            apiUrl="http://localhost:8000/batch-predict" 
+            formFieldName="files"
+            token={token} 
+            onResult={handleResult}/>
         </div>
 
-        {/* Summary Stats */}
+{/*       {/* Summary Stats 
         <div className="bg-white border rounded-lg shadow p-4">
           <h2 className="text-lg font-semibold mb-4">Summary Statistics</h2>
           <div className="space-y-4">
@@ -62,7 +76,7 @@ const Dashboard = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Quick Actions */}
+        Quick Actions 
         <div className="bg-white border rounded-lg shadow p-4">
           <h2 className="text-lg font-semibold mb-4">Quick Actions</h2>
           <div className="space-y-3">
@@ -77,7 +91,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Disease Distribution Chart */}
+        {/* Disease Distribution Chart 
         <div className="bg-white border rounded-lg shadow p-4">
           <h2 className="text-lg font-semibold mb-4">Disease Distribution</h2>
           <ResponsiveContainer width="100%" height={250}>
@@ -99,7 +113,8 @@ const Dashboard = () => {
               <Legend />
             </PieChart>
           </ResponsiveContainer>
-        </div>
+          
+        </div>*/}
       </div>
     </div>
   );

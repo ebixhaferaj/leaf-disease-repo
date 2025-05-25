@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
     const role = localStorage.getItem('role');
     const accessToken = localStorage.getItem('accessToken');
     const refreshToken = localStorage.getItem('refreshToken');
-  
+
     if (email && accessToken && refreshToken) {
       setAuth({ email, role, accessToken, refreshToken });
     }

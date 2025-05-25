@@ -142,7 +142,7 @@ async def login_for_access_token(
     access_token = create_access_token(user.email, user.id, user.role, timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
     refresh_token = create_refresh_token(user.email, user.id, user.role, timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS))
 
-    return {'access_token': access_token, 'refresh_token': refresh_token, 'token_type': 'bearer', 'role': user.role}
+    return {'access_token': access_token, 'refresh_token': refresh_token, 'token_type': 'bearer', 'role': user.role, "user_id": user.id}
 
 # Logout
 @router.post("/logout")

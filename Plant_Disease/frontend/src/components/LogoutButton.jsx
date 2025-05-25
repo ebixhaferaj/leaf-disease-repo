@@ -25,6 +25,7 @@ const LogoutButton = () => {
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('role');
     localStorage.removeItem('email');
+    localStorage.removeItem('user_id');
 
     // Redirect to login
     navigate('/login');

@@ -108,7 +108,7 @@ async def get_unconfirmed_predictions(
 
 
 # Confirmed Predictions
-@router.get("/confirmed-predictions", dependencies=[Depends(user_only)])
+@router.get("/confirmed-predictions")
 async def get_confirmed_predictions(
     db: db_dependency,
     current_user: Users = Depends(get_current_user),
@@ -139,7 +139,7 @@ async def get_prediction_image(
 
 
 # Detailed information on single prediction
-@router.get("/prediction/{prediction_id}", dependencies=[Depends(user_only)])
+@router.get("/prediction/{prediction_id}")
 async def get_prediction(
     prediction_id: int,
     db: db_dependency,

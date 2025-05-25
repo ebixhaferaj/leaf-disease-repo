@@ -55,6 +55,7 @@ const Login = () => {
             const refreshToken = response?.data.refresh_token;
             
             const role = response?.data?.role;
+            const user_id = response?.data?.user_id;
             const roles = Array.isArray(role) ? role : [role];
 
             setAuth({ 
@@ -67,6 +68,7 @@ const Login = () => {
             localStorage.setItem("refreshToken", refreshToken);
             localStorage.setItem("role", JSON.stringify(roles));
             localStorage.setItem("email", email);
+            localStorage.setItem("user_id", user_id);
 
             if (roles.includes('farmer')) {
                 navigate('/farmer/home');
