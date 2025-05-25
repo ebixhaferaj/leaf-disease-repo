@@ -6,7 +6,9 @@ from app.database import create_tables, seed_leaf_diseases, SessionLocal
 from app.scheduler.scheduler import scheduler
 from app.scheduler.scheduler import delete_old_unconfirmed_predictions
 from fastapi.middleware.cors import CORSMiddleware
-
+from fastapi.staticfiles import StaticFiles
+import os
+from app.core import PREDICTION_IMAGE_PATH
 
 scheduler.add_job(delete_old_unconfirmed_predictions, 'interval', hours=1)
 
@@ -45,6 +47,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Public mount path (accessible from browser)
+app.mount("/predictions", StaticFiles(directory=PREDICTION_IMAGE_PATH), name="predictions")
+
 @app.get("/")
 async def root():
     return {"message": "hello world"}

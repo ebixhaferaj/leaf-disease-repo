@@ -58,7 +58,7 @@ const Dashboard = () => {
             onResult={handleResult}/>
         </div>
 
-{/*       {/* Summary Stats 
+       {/* Summary Stats */}
         <div className="bg-white border rounded-lg shadow p-4">
           <h2 className="text-lg font-semibold mb-4">Summary Statistics</h2>
           <div className="space-y-4">
@@ -75,8 +75,8 @@ const Dashboard = () => {
         </div>
       </div>
 
+      {/* Quick Actions */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        Quick Actions 
         <div className="bg-white border rounded-lg shadow p-4">
           <h2 className="text-lg font-semibold mb-4">Quick Actions</h2>
           <div className="space-y-3">
@@ -91,7 +91,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Disease Distribution Chart 
+        {/* Disease Distribution Chart */}
         <div className="bg-white border rounded-lg shadow p-4">
           <h2 className="text-lg font-semibold mb-4">Disease Distribution</h2>
           <ResponsiveContainer width="100%" height={250}>
@@ -114,7 +114,7 @@ const Dashboard = () => {
             </PieChart>
           </ResponsiveContainer>
           
-        </div>*/}
+        </div>
       </div>
     </div>
   );
