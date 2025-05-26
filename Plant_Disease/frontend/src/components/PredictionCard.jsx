@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 const PredictionCard = ({ 
   image, 
   diseaseName, 
-  confidence, 
+  confidence,
   timestamp, 
   status, 
   children 
@@ -14,19 +14,18 @@ const PredictionCard = ({
     ? format(new Date(timestamp), 'PPpp') 
     : 'Unknown time';
 
-  const statusIcon = status === 'confirmed' ? (
-    <ShieldCheck className="w-5 h-5 text-green-600" />
-  ) : (
-    <AlertCircle className="w-5 h-5 text-yellow-500" />
-  );
+    const statusIcon = status === true || status === 'true' ? (
+      <ShieldCheck className="w-5 h-5 text-green-600" />
+    ) : (
+      <AlertCircle className="w-5 h-5 text-yellow-500" />
+    );
+    
 
   return (
     <div className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row">
-      <img
-        src={image}
-        alt="Prediction"
-        className="w-full md:w-48 h-48 object-cover"
-      />
+      <div className="w-full md:w-48 h-48 overflow-hidden rounded-xl">
+        {image}
+      </div>
 
       <div className="flex-1 p-4 space-y-2">
         <div className="flex justify-between items-center">
@@ -35,7 +34,6 @@ const PredictionCard = ({
           </h2>
           {statusIcon}
         </div>
-
         <p className="text-sm text-gray-600">
           Confidence: <span className="font-medium">{confidence}%</span>
         </p>

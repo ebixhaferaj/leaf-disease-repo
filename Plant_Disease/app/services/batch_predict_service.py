@@ -43,14 +43,27 @@ def get_predictions_by_confirmation_status(db, user_id: int, confirmed: bool, or
 
     return query.all()
 
-# Get a single prediction
 def get_prediction_by_id(db, user_id, prediction_id):
-    query = (
-        db.query(Predictions)
+    result = (
+        db.query(Predictions, Leaf_Diseases.pesticides)
         .join(Leaf_Diseases, Predictions.name_fk == Leaf_Diseases.name)
-        .filter(Predictions.id == prediction_id)).first()
-    
-    return query
+        .filter(Predictions.id == prediction_id)
+        .first()
+    )
+    if not result:
+        return None
+
+    prediction, pesticides = result
+    return {
+        "id": prediction.id,
+        "name_fk": prediction.name_fk,
+        "image_url": prediction.image_url,
+        "confidence": prediction.prediction_confidence,
+        "timestamp": prediction.timestamp,
+        "confirmed": prediction.confirmed,
+        "pesticides": pesticides,
+        # add other fields you need
+    }
 
 # Delete prediction
 def delete_prediction(db, user_id, prediction_id):
@@ -63,7 +76,7 @@ def delete_prediction(db, user_id, prediction_id):
             detail="Prediction not found or not authorized to delete."
         )
     
-    image_path = os.path.join(PREDICTION_IMAGE_PATH, prediction.image_url)
+    image_path = os.path.join(PREDICTION_IMAGE_PATH, prediction['image_url'])
     if os.path.exists(image_path):
         os.remove(image_path)
 

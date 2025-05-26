@@ -178,7 +178,7 @@ async def get_prediction_image(
     if not prediction:
         raise HTTPException(status_code=404, detail="Prediction not found")
     
-    image_path = os.path.join(PREDICTION_IMAGE_PATH, prediction.image_url)
+    image_path = os.path.join(PREDICTION_IMAGE_PATH, prediction['image_url'])
 
     if not os.path.exists(image_path):
         raise HTTPException(status_code=404, detail="Image not found on server")

@@ -4,6 +4,8 @@ import PredictionCard from './PredictionCard';
 import PredictionActions from './PredictionActions';
 import Spinner from './Spinner';
 import ClipLoader from 'react-spinners/ClipLoader'
+import instance from "../api/axios";
+import PredictionImage from './PredictionImage';
 
 const PredictionList = ({ type }) => {
   const [predictions, setPredictions] = useState([]);
@@ -20,10 +22,10 @@ const PredictionList = ({ type }) => {
         // Adjust URL based on type
         const endpoint =
           type === 'confirmed'
-            ? 'http://localhost:8000/predict/confirmed-predictions'
-            : 'http://localhost:8000/predict/unconfirmed-predictions';
+            ? '/batch-predict/confirmed-predictions'
+            : '/batch-predict/unconfirmed-predictions';
 
-        const response = await axios.get(endpoint, {
+        const response = await instance.get(endpoint, {
           headers: { Authorization: `Bearer ${token}` },
         });
         console.log("Fetched predictions:", response.data);
@@ -52,19 +54,20 @@ const PredictionList = ({ type }) => {
       {predictions.map((data) => (
         <PredictionCard
           key={data.id}
-          image={data.image_url}  // adapt field name to your API response
+          image={<PredictionImage predictionId={data.id} />}  // Pass as JSX
           diseaseName={data.name_fk}
-          confidence={Math.round(data.confidence * 100)}  // assuming confidence is float 0-1
+          confidence={Math.round(data.prediction_confidence * 100)}  // assuming confidence is float 0-1
           timestamp={data.timestamp}
           status={data.confirmed === 'true' ? 'confirmed' : 'unconfirmed'}
         >
           <PredictionActions
             type={type}
-            onConfirm={() => console.log('Confirmed', data.id)}
-            onDelete={() => console.log('Deleted', data.id)}
+            onConfirm={() => instance.post(`/predict/confirm-prediction/${predictionId}`)}
+            onDelete={() => handleDelete(predictionId)}
           />
         </PredictionCard>
       ))}
+      
     </div>
   );
 };

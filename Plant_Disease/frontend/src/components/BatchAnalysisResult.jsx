@@ -128,26 +128,26 @@ const BatchAnalysisResult = ({ analyses, onReset, onResetSingle }) => {
   <>
     <h2 className="text-xl font-semibold mb-2">{detailedData.name_fk}</h2>
     <p>
-      <strong>Confidence:</strong> {(detailedData.prediction_confidence * 100).toFixed(2)}%
+      <strong>Confidence:</strong> {(detailedData.confidence * 100).toFixed(2)}%
     </p>
     <p className="mt-2">
       <strong>Confirmed:</strong> {detailedData.confirmed ? "Yes" : "No"}
     </p>
     <p className="mt-2">
-      <strong>Timestamp:</strong> {new Date(detailedData.timestamp).toLocaleString()}
+      <strong>Created:</strong> {new Date(detailedData.timestamp).toLocaleString()}
     </p>
-    <p className="mt-2">
+    {/* Remove if user_id_fk is not present */}
+    {/* <p className="mt-2">
       <strong>User ID:</strong> {detailedData.user_id_fk}
-    </p>
-    {detailedData.image_url && (
-      <img
-        src={`http://localhost:8000/static/predictions/${detailedData.image_url}`}
-        alt="Detailed Prediction"
-        className="mt-4 rounded shadow w-full max-w-md object-cover"
-      />
+    </p> */}
+    {detailedData.pesticides && (
+      <p className="mt-2">
+        <strong>Treatment:</strong> {detailedData.pesticides}
+      </p>
     )}
   </>
 )}
+
 
     </div>
   );

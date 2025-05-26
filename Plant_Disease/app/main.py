@@ -48,8 +48,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Public mount path (accessible from browser)
-app.mount("/predictions", StaticFiles(directory=PREDICTION_IMAGE_PATH), name="predictions")
 
 @app.get("/")
 async def root():

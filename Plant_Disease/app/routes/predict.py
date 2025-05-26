@@ -76,19 +76,21 @@ async def predict(
     }
 
 # Confirm prediction
-@router.post("/confirm-prediction", dependencies=[Depends(user_only)])
+@router.post("/confirm-prediction/{prediction_id}")
 async def confirm_prediction(
-    data: ConfirmPredictionRequest,
+    prediction_id: int,
     db: db_dependency,
     current_user: Users = Depends(get_current_user)
 ):
-    prediction = db.query(Predictions).filter(Predictions.id == data.prediction_id, Predictions.user_id_fk == current_user.id).first()
+    prediction = db.query(Predictions).filter(
+        Predictions.id == prediction_id,
+        Predictions.user_id_fk == current_user.id
+    ).first()
 
     if not prediction:
         raise HTTPException(status_code=404, detail="Prediction not found")
 
     prediction.confirmed = True
-
     db.commit()
     db.refresh(prediction)
 
@@ -97,7 +99,7 @@ async def confirm_prediction(
 
 
 # Unconfirmed Predictions
-@router.get("/unconfirmed-predictions")
+@router.get("/unconfirmed-predictions", dependencies=[Depends(user_only)])
 async def get_unconfirmed_predictions(
     db: db_dependency,
     current_user: Users = Depends(get_current_user),
@@ -108,7 +110,7 @@ async def get_unconfirmed_predictions(
 
 
 # Confirmed Predictions
-@router.get("/confirmed-predictions")
+@router.get("/confirmed-predictions", dependencies=[Depends(user_only)])
 async def get_confirmed_predictions(
     db: db_dependency,
     current_user: Users = Depends(get_current_user),
@@ -119,7 +121,7 @@ async def get_confirmed_predictions(
 
 
 # Prediction Image
-@router.get("/image/{prediction_id}", dependencies=[Depends(user_only)])
+@router.get("/image/{prediction_id}")
 async def get_prediction_image(
     prediction_id: int,
     db: db_dependency,
@@ -130,7 +132,7 @@ async def get_prediction_image(
     if not prediction:
         raise HTTPException(status_code=404, detail="Prediction not found")
     
-    image_path = os.path.join(PREDICTION_IMAGE_PATH, prediction.image_url)
+    image_path = os.path.join(PREDICTION_IMAGE_PATH, prediction['image_url'])
 
     if not os.path.exists(image_path):
         raise HTTPException(status_code=404, detail="Image not found on server")
