@@ -8,7 +8,7 @@ const PredictionActions = ({ type, onConfirm, onDelete }) => {
         <button
           onClick={(e) => {
             e.stopPropagation();
-            onConfirm();  // ✅ This should now trigger the parent function
+            onConfirm(); 
           }}
           className="flex items-center px-3 py-1 text-sm bg-green-700 text-white rounded shadow hover:bg-green-800"
         >

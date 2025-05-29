@@ -153,7 +153,7 @@ async def get_prediction(
     return prediction
 
 # Delete prediction
-@router.delete("/delete/{prediction_id}", dependencies=[Depends(user_only)])
+@router.delete("/delete/{prediction_id}")
 async def delete_user_prediction(
     prediction_id: int,
     db: db_dependency,

@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import instance from '../api/axios'; // your axios instance
-
+import { 
+  LogOutIcon
+} from 'lucide-react';
 const LogoutButton = () => {
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
@@ -34,9 +36,10 @@ const LogoutButton = () => {
   return (
     <button
       onClick={handleLogout}
-      className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded"
+      className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50 transition-colors"
     >
-      Logout
+      <LogOutIcon/>
+      <p className='text-sm'>Log Out</p>
     </button>
   );
 };

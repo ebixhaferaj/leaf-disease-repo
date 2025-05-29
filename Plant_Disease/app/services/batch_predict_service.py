@@ -68,20 +68,23 @@ def get_prediction_by_id(db, user_id, prediction_id):
 # Delete prediction
 def delete_prediction(db, user_id, prediction_id):
 
-    prediction = get_prediction_by_id(db, user_id, prediction_id)
+    prediction_instance = db.query(Predictions).filter(
+        Predictions.id == prediction_id,
+        Predictions.user_id_fk == user_id
+    ).first()
 
-    if not prediction:
+    if not prediction_instance:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Prediction not found or not authorized to delete."
         )
     
-    image_path = os.path.join(PREDICTION_IMAGE_PATH, prediction['image_url'])
+    image_path = os.path.join(PREDICTION_IMAGE_PATH, prediction_instance.image_url)
     if os.path.exists(image_path):
         os.remove(image_path)
 
     # Delete prediction record
-    db.delete(prediction)
+    db.delete(prediction_instance)
     db.commit()
 
     return {"detail": "Prediction deleted successfully."}

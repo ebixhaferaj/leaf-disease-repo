@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {onSelect} from 'react';
 import { FileText, ShieldCheck, Clock, AlertCircle } from 'lucide-react';
 import { format } from 'date-fns';
 
 const PredictionCard = ({ 
+  selected,
+  onSelect,
   image, 
   diseaseName, 
   confidence,
@@ -22,34 +24,41 @@ const PredictionCard = ({
     
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row">
-      <div className="w-full md:w-48 h-48 overflow-hidden rounded-xl">
-        {image}
-      </div>
+    <div 
+    onClick={onSelect}
+    className={`p-4 rounded shadow cursor-pointer transition 
+    ${selected ? 'border-2 border-blue-300 bg-green-50' : 'border border-gray-200'}
+    `}
+  >
+    <div className="bg-white rounded shadow-lg overflow-hidden flex flex-col md:flex-row">
 
-      <div className="flex-1 p-4 space-y-2">
-        <div className="flex justify-between items-center">
-          <h2 className="text-lg font-semibold text-gray-800">
-            {diseaseName}
-          </h2>
-          {statusIcon}
+        <div className="w-full md:w-48 h-48 overflow-hidden rounded-xl">
+          {image}
         </div>
-        <p className="text-sm text-gray-600">
-          Confidence: <span className="font-medium">{confidence}%</span>
-        </p>
+          
+        <div className="flex-1 p-4 space-y-2">
+          <div className="flex justify-between items-center">
+            <h2 className="text-lg font-semibold text-gray-800">
+              {diseaseName}
+            </h2>
+            {statusIcon}
+          </div>
+          <p className="text-sm text-gray-600">
+            Confidence: <span className="font-medium">{confidence}%</span>
+          </p>
 
-        <p className="flex items-center text-sm text-gray-500">
-          <Clock className="w-4 h-4 mr-1" />
-          {formattedTime}
-        </p>
+          <p className="flex items-center text-sm text-gray-500">
+            <Clock className="w-4 h-4 mr-1" />
+            {formattedTime}
+          </p>
         
 
-        <div className="pt-2 flex flex-wrap gap-2">
-          {children}
+          <div className="pt-2 flex flex-wrap gap-2">
+            {children}
+          </div>
         </div>
       </div>
-      
-    </div>
+</div>
   );
 };
 

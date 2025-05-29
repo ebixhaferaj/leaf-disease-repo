@@ -78,15 +78,13 @@ export const BatchUploadDropzone = ({ apiUrl, formFieldName, token = null, onRes
       reader.readAsDataURL(file);
     });
   
-    // Now upload ALL images at once
+
     analyzeImagesBatch(validFiles)
       .then((batchPredictionData) => {
-        // batchPredictionData should have 'results' array and 'prediction_ids' array
         setSelectedImages((prev) => {
-          // Map results back to images by order/index
           return prev.map((item, index) => ({
             ...item,
-            predictionData: batchPredictionData.results[index], // attach each result to corresponding image
+            predictionData: batchPredictionData.results[index], 
             predictionId: batchPredictionData.prediction_ids[index],
           }));
         });
@@ -157,8 +155,8 @@ export const BatchUploadDropzone = ({ apiUrl, formFieldName, token = null, onRes
           onDragLeave={handleDragLeave}
           onDragOver={handleDragOver}
           onDrop={handleDrop}
-          className={`relative cursor-pointer rounded-lg border-4 border-dashed border-green-600 bg-white/20 p-12 text-center transition-colors ${
-            isDragging ? "border-green-800 bg-green-100" : ""
+          className={`relative cursor-pointer rounded-lg border-4 border-dashed border-leaf-600 bg-white/20 p-12 text-center transition-colors ${
+            isDragging ? "border-leaf-800 bg-leaf-100" : ""
           }`}
         >
           <input
@@ -171,7 +169,7 @@ export const BatchUploadDropzone = ({ apiUrl, formFieldName, token = null, onRes
           />
 
           <div className="mx-auto max-w-xs space-y-1">
-            <p className="text-5xl text-green-600">
+            <p className="text-5xl text-leaf-600">
               {/* Use any icon or image here */}
             </p>
             <p className="text-gray-700 font-semibold">Drag & Drop images here</p>

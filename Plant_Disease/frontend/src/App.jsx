@@ -16,6 +16,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import RedirectIfLoggedIn from './components/RedirectIfLoggedIn';
 import FarmerLayout from './layouts/FarmerLayout';
 import FarmerPredictionPage from './pages/FarmerPredictionPage';
+import { Reports } from './pages/ReportsPage';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -46,6 +47,7 @@ function App() {
           <Route element={<RequireAuth allowedRoles={['farmer']}/>}>
             <Route path='farmer/home' element={<HomePageFarmer />} />
             <Route path='farmer/predictions' element={<FarmerPredictionPage/>}/>
+            <Route path='farmer/reports' element={<Reports/>}/>
           </Route>
         </Route>
 

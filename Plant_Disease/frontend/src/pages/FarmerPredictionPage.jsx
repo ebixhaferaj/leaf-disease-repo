@@ -13,7 +13,11 @@ const FarmerPredictionPage = () => {
   return (
     <div className="p-6 space-y-6">
       <Tabs value={activeTab} onChange={setActiveTab} />
-      <PredictionList type={activeTab} predictions={filtered} />
+      <PredictionList  
+      type={activeTab} a
+      allowSelection={true}
+      showReportButton={true} 
+      predictions={filtered} />
     </div>
 
   );

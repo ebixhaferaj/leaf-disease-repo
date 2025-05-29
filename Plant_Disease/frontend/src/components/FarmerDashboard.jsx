@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { Upload, FileText, Download } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import BatchUploadDropzone from './BatchUploadDropzone';
-import BatchAnalysisResult from './BatchAnalysisResult'
-import UploadDropzone from './UploadDropzone'
-import PlantAnalysisResult from './PlantAnalysisResult';
+
 
 const statsData = [
   { title: 'Total Reports', value: '12', icon: FileText },
@@ -36,7 +34,7 @@ const Dashboard = () => {
   return (
     <div className="p-6 space-y-6 flex-1">
       {/* Welcome Section */}
-      <div className="bg-green-700 text-white rounded-lg p-6">
+      <div className="bg-leaf-700 text-white rounded-lg p-6">
         <h1 className="text-2xl font-bold mb-2">Welcome back, Farmer!</h1>
         <p className="text-white/90">
           Monitor your crops and manage plant disease predictions with confidence
@@ -47,7 +45,7 @@ const Dashboard = () => {
         {/* Upload Card */}
         <div className="bg-white border rounded-lg shadow p-4">
           <div className="flex items-center gap-2 mb-4">
-            <Upload className="w-5 h-5 text-green-700" />
+            <Upload className="w-5 h-5 text-leaf-700" />
             <h2 className="text-lg font-semibold">Upload Plant Images</h2>
           </div>
 
@@ -65,7 +63,7 @@ const Dashboard = () => {
             {statsData.map((stat, index) => (
               <div key={index} className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-gray-600">
-                  {stat.icon && <stat.icon className="w-4 h-4 text-green-700" />}
+                  {stat.icon && <stat.icon className="w-4 h-4 text-leaf-700" />}
                   <span className="text-sm">{stat.title}</span>
                 </div>
                 <span className="font-medium text-gray-800">{stat.value}</span>
@@ -80,7 +78,7 @@ const Dashboard = () => {
         <div className="bg-white border rounded-lg shadow p-4">
           <h2 className="text-lg font-semibold mb-4">Quick Actions</h2>
           <div className="space-y-3">
-            <button className="w-full flex items-center justify-start gap-2 px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800 transition">
+            <button className="w-full flex items-center justify-start gap-2 px-4 py-2 bg-leaf-700 text-white rounded hover:bg-leaf-800 transition">
               <FileText className="w-4 h-4" />
               Create Report
             </button>
