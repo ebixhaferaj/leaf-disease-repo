@@ -2,3 +2,4 @@ from .auth import CreateUserRequest, Token, LoginRequest, EmailSchema, RefreshTo
 from .users import UpdateEmailRequest, UpdateUsernameRequest, UpdatePasswordRequest, UserOut
 from .predictions import ConfirmPredictionRequest
 from .batch_predictions import ConfirmBatchPredictionRequest
+from .report import ReportRenameRequest

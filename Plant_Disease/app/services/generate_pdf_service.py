@@ -22,6 +22,8 @@ def generate_pdf(predictions, report_path: str):
     LOGO_FOLDER = LOGO_PATH_FOR_PDF
     LOGO_PATH = os.path.join(LOGO_FOLDER, LOGO_NAME)
 
+    print(LOGO_PATH)
+
     # Header: Logo and Title
     try:
         if os.path.exists(LOGO_PATH):

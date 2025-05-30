@@ -10,7 +10,8 @@ class Report(Base):
     farmer_id = Column(Integer, ForeignKey("users.id"))
     pdf_path = Column(String, nullable=False)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
- 
+    report_name = Column(String, nullable=True) 
+
     predictions = relationship(
     "Predictions",
     secondary="report_prediction_association",

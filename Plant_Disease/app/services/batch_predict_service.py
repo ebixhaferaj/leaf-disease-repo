@@ -62,7 +62,6 @@ def get_prediction_by_id(db, user_id, prediction_id):
         "timestamp": prediction.timestamp,
         "confirmed": prediction.confirmed,
         "pesticides": pesticides,
-        # add other fields you need
     }
 
 # Delete prediction

@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query
+from typing import Literal
 from app.database.database import db_dependency
 from app.models import Users
 from app.services import get_current_user,get_prediction_by_id
