@@ -22,8 +22,8 @@ const PredictionList = ({ type, allowSelection = false, showReportButton = false
       try {
         const endpoint =
           type === 'confirmed'
-            ? '/batch-predict/confirmed-predictions'
-            : '/batch-predict/unconfirmed-predictions';
+            ? '/confirmed-predictions'
+            : '/unconfirmed-predictions';
 
         const response = await instance.get(endpoint, {
           headers: { Authorization: `Bearer ${token}` },
@@ -44,8 +44,8 @@ const PredictionList = ({ type, allowSelection = false, showReportButton = false
   const handleConfirm = async (id) => {
     try {
       const response = await instance.post(
-        `/predict/confirm-prediction/${id}`,
-        { prediction_id: id }, // request body
+        `/confirm-prediction/${id}`,
+        { prediction_id: id },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -69,7 +69,7 @@ const PredictionList = ({ type, allowSelection = false, showReportButton = false
 
   const handleDelete = async (id) => {
     try {
-      await instance.delete(`/predict/delete/${id}`, {
+      await instance.delete(`/delete-prediction/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Deleted successfully")

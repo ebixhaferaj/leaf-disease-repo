@@ -7,22 +7,16 @@ from typing import List
 # Third-Party Libraries
 import numpy as np
 import requests
-from fastapi import APIRouter, Depends, File, UploadFile, HTTPException, Query
-from fastapi.responses import FileResponse
-from sqlalchemy.orm import Session
+from fastapi import APIRouter, Depends, File, UploadFile, HTTPException
 
 # Local Application Imports
 from app.core import ENDPOINT, MAX_BATCH_SIZE, PREDICTION_IMAGE_PATH
-from app.database.database import get_db, db_dependency
+from app.database.database import db_dependency
 from app.models import Users, Predictions, Leaf_Diseases
-from app.schemas import ConfirmBatchPredictionRequest
 from app.services import (
     get_current_user,
     read_files_as_images,
-    RoleChecker,
-    get_predictions_by_confirmation_status,
-    get_prediction_by_id,
-    delete_prediction
+    RoleChecker
 )
 
 
@@ -38,8 +32,8 @@ farmer_only = RoleChecker(allowed_roles=["farmer"])
 # Batch Prediction
 @router.post("/", dependencies=[Depends(farmer_only)])
 async def predict(
+    db: db_dependency,
     files: List[UploadFile] = File(...),
-    db: Session = Depends(get_db),
     current_user: Users = Depends(get_current_user)
     ):
     
@@ -118,97 +112,3 @@ async def predict(
     }
 
 
-# Confirm batch prediction
-@router.post("/confirm-batch-prediction", dependencies=[Depends(farmer_only)])
-async def confirm_prediction(
-    data: ConfirmBatchPredictionRequest,
-    db: Session = Depends(get_db),
-    current_user: Users = Depends(get_current_user)
-):
-    predictions = db.query(Predictions).filter(
-        Predictions.id.in_(data.prediction_id),
-        Predictions.user_id_fk == current_user.id
-    ).all()
-
-    if not predictions:
-        raise HTTPException(status_code=404, detail="No matching predictions found")
-
-    for prediction in predictions:
-        prediction.confirmed = True
-
-    db.commit()
-
-    return {
-        "message": "Predictions confirmed successfully.",
-        "confirmed_ids": [p.id for p in predictions]
-    }
-
-
-
-# Filter unconfirmed predictions
-@router.get("/unconfirmed-predictions", dependencies=[Depends(farmer_only)])
-async def get_unconfirmed_predictions(
-    db: db_dependency,
-    current_user: Users = Depends(get_current_user),
-    order: str = Query("desc", enum=["asc", "desc"])
-):
-    return get_predictions_by_confirmation_status(db, current_user.id, confirmed=False, order=order)
-
-
-
-# Filter confirmed predictions
-@router.get("/confirmed-predictions", dependencies=[Depends(farmer_only)])
-async def get_confirmed_predictions(
-    db: db_dependency,
-    current_user: Users = Depends(get_current_user),
-    order: str = Query("desc", enum=["asc", "desc"])
-):
-    return get_predictions_by_confirmation_status(db, current_user.id, confirmed=True, order=order)
-
-
-# Get Prediction image
-@router.get("/image/{prediction_id}", dependencies=[Depends(farmer_only)])
-async def get_prediction_image(
-    prediction_id: int,
-    db: Session = Depends(get_db),
-    current_user: Users = Depends(get_current_user)
-):
-    prediction = get_prediction_by_id(db=db, user_id=current_user.id, prediction_id=prediction_id)
-
-    if not prediction:
-        raise HTTPException(status_code=404, detail="Prediction not found")
-    
-    image_path = os.path.join(PREDICTION_IMAGE_PATH, prediction['image_url'])
-
-    if not os.path.exists(image_path):
-        raise HTTPException(status_code=404, detail="Image not found on server")
-
-    return FileResponse(image_path, media_type="image/jpeg")
-
-
-
-# Detailed information on single prediction
-@router.get("/prediction/{prediction_id}", dependencies=[Depends(farmer_only)])
-async def get_prediction(
-    prediction_id: int,
-    db: db_dependency,
-    current_user: Users = Depends(get_current_user)
-):
-    
-    prediction = get_prediction_by_id(db=db, user_id=current_user.id, prediction_id=prediction_id)
-
-    return prediction
-
-
-
-# Delete prediction
-@router.delete("/delete/{prediction_id}", dependencies=[Depends(farmer_only)])
-async def delete_farmer_prediction(
-    prediction_id: int,
-    db: db_dependency,
-    current_user: Users = Depends(get_current_user)
-):
-    
-    prediction = delete_prediction(db=db, user_id=current_user.id, prediction_id=prediction_id)
-
-    return prediction

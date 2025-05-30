@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import instance  from "../api/axios";
 
 const BatchAnalysisResult = ({ analyses, onReset, onResetSingle }) => {
   const [selectedIndex, setSelectedIndex] = useState(null);
@@ -7,6 +8,7 @@ const BatchAnalysisResult = ({ analyses, onReset, onResetSingle }) => {
   const [error, setError] = useState(null);
 
   const token = localStorage.getItem("accessToken")
+
   useEffect(() => {
     if (selectedIndex !== null) {
       const predictionId = analyses[selectedIndex]?.predictionId;
@@ -14,25 +16,20 @@ const BatchAnalysisResult = ({ analyses, onReset, onResetSingle }) => {
         setError("No prediction ID found.");
         return;
       }
-
+  
       setLoading(true);
       setError(null);
-      fetch(`http://localhost:8000/predict/prediction/${predictionId}`, {
-        headers: {
-          "Authorization": `Bearer ${token}`
-        }
-      })
-        .then((res) => {
-          if (!res.ok) throw new Error("Failed to fetch prediction details.");
-          return res.json();
-        })
-        .then((data) => {
-          console.log("Detailed prediction data:", data); // 🔍 Console log here
-          setDetailedData(data);
+  
+      instance.get(`/prediction-details/${predictionId}`)
+        .then((response) => {
+          console.log("Detailed prediction data:", response.data);
+          setDetailedData(response.data);
           setLoading(false);
         })
-        .catch((err) => {
-          setError(err.message);
+        .catch((error) => {
+          const message =
+            error.response?.data?.detail || error.message || "Something went wrong.";
+          setError(message);
           setLoading(false);
         });
     } else {

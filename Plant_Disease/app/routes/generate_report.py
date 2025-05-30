@@ -77,12 +77,3 @@ async def generate_report(
         "report_name": report_filename
     }
 
-
-#@router.post("/get-reports", dependencies=[Depends(farmer_only)])
-#async def get_reports(
-#    data: ConfirmBatchPredictionRequest,
-#    db: Session = Depends(get_db),
-#    current_user: Users = Depends(get_current_user)
-#):
-#    
-#

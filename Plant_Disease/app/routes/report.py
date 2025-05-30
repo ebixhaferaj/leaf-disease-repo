@@ -5,8 +5,8 @@ from app.services import get_current_user,delete_pdf_report, RoleChecker
 from typing import Literal
 from app.services import get_reports
 router = APIRouter(
-    prefix="/report",
-    tags=["report"]
+    prefix="/get-report",
+    tags=["get-report"]
 )
 
 farmer_only = RoleChecker(allowed_roles=["farmer"])

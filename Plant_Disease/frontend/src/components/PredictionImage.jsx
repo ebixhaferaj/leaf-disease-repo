@@ -13,7 +13,7 @@ const PredictionImage = ({ predictionId }) => {
       const token = localStorage.getItem("accessToken");
 
       try {
-        const response = await instance.get(`/predict/image/${predictionId}`, {
+        const response = await instance.get(`/prediction-image/${predictionId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -1,5 +1,16 @@
 from fastapi import FastAPI
-from app.routes import predict, batch_predict, generate_report, users, report, guest_predict
+from app.routes import (predict, 
+                        batch_predict, 
+                        generate_report, 
+                        users, 
+                        report, 
+                        guest_predict, 
+                        confirmed_predictions, 
+                        unconfirmed_predictions,
+                        delete_prediction,
+                        prediction_details, 
+                        confirm_prediction,
+                        prediction_image)
 from app.routes.auth import router as auth_router
 from contextlib import asynccontextmanager
 from app.database import create_tables, seed_leaf_diseases, SessionLocal
@@ -37,12 +48,18 @@ app.include_router(auth_router)
 app.include_router(batch_predict.router)
 app.include_router(guest_predict.router)
 app.include_router(generate_report.router)
+app.include_router(confirmed_predictions.router)
+app.include_router(unconfirmed_predictions.router)
+app.include_router(delete_prediction.router)
+app.include_router(prediction_details.router)
+app.include_router(confirm_prediction.router)
+app.include_router(prediction_image.router)
 app.include_router(users.router)
 app.include_router(report.router)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # React's default port
+    allow_origins=["http://localhost:5173"], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

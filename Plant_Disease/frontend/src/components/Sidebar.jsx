@@ -47,7 +47,7 @@ const Sidebar = () => {
           <img src="/images/logo_no_name.png" alt="Logo" className="w-15 h-10" />
         </div>
         <div>
-          <h1 className="text-xl font-bold text-leaf-800">HealthyLeafs</h1>
+          <h1 className="text-xl font-bold text-leaf-800">HealthyGreens</h1>
           <p className="text-sm text-gray-500">Farmer Dashboard</p>
         </div>
       </div>
