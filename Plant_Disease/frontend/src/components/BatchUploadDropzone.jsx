@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { Image, Upload, ArrowUp } from 'lucide-react';
 import BatchAnalysisResult from "./BatchAnalysisResult";
 
 export const BatchUploadDropzone = ({ apiUrl, formFieldName, token = null, onResult = () => {} }) => {
   const [isDragging, setIsDragging] = useState(false);
-  const [selectedImages, setSelectedImages] = useState([]); // { imageUrl, predictionData, fileName }
+  const [selectedImages, setSelectedImages] = useState([]);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   const toast = (title, description) => {
@@ -146,7 +147,11 @@ export const BatchUploadDropzone = ({ apiUrl, formFieldName, token = null, onRes
             onResetSingle={resetSingleAnalysis}
           />
           {isAnalyzing && (
-            <p className="mt-4 text-center text-gray-600">Analyzing images, please wait...</p>
+            <div className="flex flex-col items-center py-8">
+              <div className="w-16 h-16 border-4 border-t-green-500 border-green-200 rounded-full animate-spin mb-4"></div>
+              <h3 className="text-xl font-medium mb-2">Analyzing your plants...</h3>
+              <p className="text-gray-500">Our AI is examining the images for signs of disease</p>
+            </div>
           )}
         </>
       ) : (
@@ -155,11 +160,20 @@ export const BatchUploadDropzone = ({ apiUrl, formFieldName, token = null, onRes
           onDragLeave={handleDragLeave}
           onDragOver={handleDragOver}
           onDrop={handleDrop}
-          className={`relative cursor-pointer rounded-lg border-4 border-dashed border-leaf-600 bg-white/20 p-12 text-center transition-colors ${
+          className={`border-2 border-dashed rounded-xl p-8 flex flex-col items-center justify-center text-center transition-all duration-200 
+          bg-white/80 backdrop-blur-sm ${
             isDragging ? "border-leaf-800 bg-leaf-100" : ""
           }`}
         >
-          <input
+          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+              <Image className="w-8 h-8 text-green-600" />
+            </div>
+            <h3 className="text-xl font-medium mb-2">Drop your plant photo here</h3>
+            <p className="text-gray-500 mb-6">Drag and drop or click to upload</p>
+            <label className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-5 rounded-lg cursor-pointer transition-all transform hover:scale-105 flex items-center">
+              <ArrowUp className="w-4 h-4 mr-2" />
+              Upload Images
+              <input
             id="fileInput"
             type="file"
             accept="image/*"
@@ -167,16 +181,10 @@ export const BatchUploadDropzone = ({ apiUrl, formFieldName, token = null, onRes
             onChange={handleFileSelect}
             className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
           />
-
-          <div className="mx-auto max-w-xs space-y-1">
-            <p className="text-5xl text-leaf-600">
-              {/* Use any icon or image here */}
+            </label>
+            <p className="mt-6 text-xs text-gray-500">
+              Supported format: PNG, Max size: 10MB
             </p>
-            <p className="text-gray-700 font-semibold">Drag & Drop images here</p>
-            <p className="text-gray-600 text-sm">
-              or click to select files (max 10MB each)
-            </p>
-          </div>
         </div>
       )}
     </motion.div>

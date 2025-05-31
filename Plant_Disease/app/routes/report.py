@@ -86,13 +86,10 @@ async def rename_report(
 
 @router.get("/download/{filename}", dependencies=[Depends(farmer_only)])
 async def download_report_pdf(filename: str, current_user=Depends(get_current_user)):
-    # Prevent path traversal attacks
     safe_filename = os.path.basename(filename)
 
-    # Correct relative path to where the PDFs are stored
     file_path = os.path.join("app", "static", "reports", safe_filename)
 
-    # Check if file exists
     if not os.path.isfile(file_path):
         raise HTTPException(status_code=404, detail="File not found")
 

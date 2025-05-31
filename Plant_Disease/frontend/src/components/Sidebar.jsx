@@ -32,7 +32,7 @@ const navigationItems = [
   },
   {
     title: 'Profile',
-    href: '/profile',
+    href: '/farmer/profile',
     icon: User
   }
 ];

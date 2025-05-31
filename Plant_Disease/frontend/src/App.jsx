@@ -17,6 +17,9 @@ import RedirectIfLoggedIn from './components/RedirectIfLoggedIn';
 import FarmerLayout from './layouts/FarmerLayout';
 import FarmerPredictionPage from './pages/FarmerPredictionPage';
 import ReportsPage from './pages/ReportsPage';
+import ProfilePage from './pages/ProfilePage' ;
+import UpdateEmailPage from './pages/UpdateEmailPage';
+
 
 function App() {
   const [count, setCount] = useState(0)
@@ -33,6 +36,7 @@ function App() {
           path="/login" element={<LoginPage/>} />
         <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+        <Route path='confirm-email-update' element={<UpdateEmailPage />}/>
         <Route path="/" element={<HomePage/>}/>
 
         {/* protected routes */}
@@ -48,6 +52,7 @@ function App() {
             <Route path='farmer/home' element={<HomePageFarmer />} />
             <Route path='farmer/predictions' element={<FarmerPredictionPage/>}/>
             <Route path='farmer/reports' element={<ReportsPage/>}/>
+            <Route path='farmer/profile' element={<ProfilePage/>}/>
           </Route>
         </Route>
 

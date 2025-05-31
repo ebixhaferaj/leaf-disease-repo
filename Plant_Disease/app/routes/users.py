@@ -1,14 +1,16 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 import os
 from app.database.database import db_dependency
 from app.services import get_current_user
 from app.schemas import UserOut, UpdateUsernameRequest, UpdatePasswordRequest, UpdateEmailRequest
+from fastapi.responses import RedirectResponse
 from ..models.user import Users
 from fastapi.templating import Jinja2Templates
 from app.services import update_user_username, update_current_user_password
 from app.services import mail, create_message
-from app.core.config import DOMAIN
+from app.core.config import DOMAIN, FRONTEND_URL
 from app.core import create_url_safe_token,decode_url_safe_token
+from jose import jwt, JWTError
 
 
 
@@ -74,6 +76,7 @@ async def update_email(
     })
 
     verification_url = f"http://{DOMAIN}/me/confirm-email-update?token={token}"
+   
     html_content = templates.get_template("update_email.html").render(verification_url=verification_url)
 
     message = create_message(
@@ -89,17 +92,22 @@ async def update_email(
 
 
 # Confirm email change
-@router.get("/confirm-email-update")
+@router.get("/confirm-email-update/")
 async def confirm_email_update(token: str, db: db_dependency):
     try:
         data = decode_url_safe_token(token)
         user_id = data.get("user_id")
         new_email = data.get("new_email")
+    except jwt.ExpiredSignatureError:
+        return RedirectResponse(url=f"{FRONTEND_URL}/confirm-email-update?status=expired")
     except HTTPException:
         raise
 
+    if not new_email:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid token")
+
     if db.query(Users).filter(Users.email == new_email).first():
-        raise HTTPException(status_code=400, detail="This email is already in use.")
+        return RedirectResponse(url=f"{FRONTEND_URL}/confirm-email-update?status=already_in_use")
 
     user = db.query(Users).filter(Users.id == user_id).first()
     if not user:
@@ -109,4 +117,8 @@ async def confirm_email_update(token: str, db: db_dependency):
     user.is_verified = True
     db.commit()
 
-    return {"message": "Email updated successfully."}
+    return RedirectResponse(url=f"{FRONTEND_URL}/confirm-email-update?status=success")
+
+#@router.get("/get-email-update-confirmation/{token}")
+#async def redirect_to_frontend_email_confirmation(token: str):
+#    

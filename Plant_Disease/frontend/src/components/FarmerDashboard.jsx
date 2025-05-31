@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Upload, FileText, Download } from 'lucide-react';
+import { Upload, FileText } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import BatchUploadDropzone from './BatchUploadDropzone';
-
 
 const statsData = [
   { title: 'Total Reports', value: '12', icon: FileText },
@@ -17,16 +16,12 @@ const diseaseData = [
   { name: 'Bean Leaf Spot', value: 20, color: '#22c55e' }
 ];
 
-
-
 const Dashboard = () => {
-  
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [results, setResults] = useState([]);
-  
-  const token = localStorage.getItem('accessToken')
-  console.log({token})
-  
+
+  const token = localStorage.getItem('accessToken');
+
   const handleResult = (predictionData) => {
     console.log("Single analysis result received:", predictionData);
   };
@@ -41,9 +36,10 @@ const Dashboard = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Upload Card */}
-        <div className="bg-white border rounded-lg shadow p-4">
+      {/* Main Layout Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 ">
+        {/* Upload Card - LEFT (2/3) */}
+        <div className="lg:col-span-2 bg-white border rounded-lg shadow p-4">
           <div className="flex items-center gap-2 mb-4">
             <Upload className="w-5 h-5 text-leaf-700" />
             <h2 className="text-lg font-semibold">Upload Plant Images</h2>
@@ -53,65 +49,51 @@ const Dashboard = () => {
             apiUrl="http://localhost:8000/batch-predict" 
             formFieldName="files"
             token={token} 
-            onResult={handleResult}/>
+            onResult={handleResult}
+          />
         </div>
 
-       {/* Summary Stats */}
-        <div className="bg-white border rounded-lg shadow p-4">
-          <h2 className="text-lg font-semibold mb-4">Summary Statistics</h2>
-          <div className="space-y-4">
-            {statsData.map((stat, index) => (
-              <div key={index} className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-gray-600">
-                  {stat.icon && <stat.icon className="w-4 h-4 text-leaf-700" />}
-                  <span className="text-sm">{stat.title}</span>
+        {/* Stats + Chart - RIGHT (1/3) */}
+        <div className="space-y-6">
+          {/* Summary Stats */}
+          <div className="bg-white border rounded-lg shadow p-4">
+            <h2 className="text-lg font-semibold mb-4">Summary Statistics</h2>
+            <div className="space-y-4">
+              {statsData.map((stat, index) => (
+                <div key={index} className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-gray-600">
+                    {stat.icon && <stat.icon className="w-4 h-4 text-leaf-700" />}
+                    <span className="text-sm">{stat.title}</span>
+                  </div>
+                  <span className="font-medium text-gray-800">{stat.value}</span>
                 </div>
-                <span className="font-medium text-gray-800">{stat.value}</span>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </div>
 
-      {/* Quick Actions */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white border rounded-lg shadow p-4">
-          <h2 className="text-lg font-semibold mb-4">Quick Actions</h2>
-          <div className="space-y-3">
-            <button className="w-full flex items-center justify-start gap-2 px-4 py-2 bg-leaf-700 text-white rounded hover:bg-leaf-800 transition">
-              <FileText className="w-4 h-4" />
-              Create Report
-            </button>
-            <button className="w-full flex items-center justify-start gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded hover:bg-gray-50 transition">
-              <Download className="w-4 h-4" />
-              Download Last PDF
-            </button>
+          {/* Disease Chart */}
+          <div className="bg-white border rounded-lg shadow p-4">
+            <h2 className="text-lg font-semibold mb-4">Disease Distribution</h2>
+            <ResponsiveContainer width="100%" height={250}>
+              <PieChart>
+                <Pie
+                  data={diseaseData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={60}
+                  outerRadius={80}
+                  paddingAngle={5}
+                  dataKey="value"
+                >
+                  {diseaseData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
           </div>
-        </div>
-
-        {/* Disease Distribution Chart */}
-        <div className="bg-white border rounded-lg shadow p-4">
-          <h2 className="text-lg font-semibold mb-4">Disease Distribution</h2>
-          <ResponsiveContainer width="100%" height={250}>
-            <PieChart>
-              <Pie
-                data={diseaseData}
-                cx="50%"
-                cy="50%"
-                innerRadius={60}
-                outerRadius={80}
-                paddingAngle={5}
-                dataKey="value"
-              >
-                {diseaseData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
-              </Pie>
-              <Tooltip />
-              <Legend />
-            </PieChart>
-          </ResponsiveContainer>
-          
         </div>
       </div>
     </div>

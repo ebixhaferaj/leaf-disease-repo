@@ -3,7 +3,7 @@ from datetime import timedelta
 
 # Third-Party Libraries
 from fastapi.responses import RedirectResponse
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException
 from fastapi.templating import Jinja2Templates
 from fastapi.security import OAuth2PasswordBearer
 from starlette import status
