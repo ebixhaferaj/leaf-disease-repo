@@ -1,0 +1,88 @@
+[
+    {
+      "name": "Corn Gray Leaf Spot",
+      "symptoms": "Small, tan, rectangular lesions that later turn gray with distinct margins. Lesions can coalesce, covering large areas of the leaf and reducing photosynthetic capacity.",
+      "causes": "Fungal pathogen *Cercospora zeae-maydis*. Thrives in warm, humid conditions, and survives in infected crop residue.",
+      "treatment": "Use of resistant hybrids, crop rotation, and fungicide application (e.g., strobilurins or triazoles) during early symptom development. Residue management helps reduce fungal survival.",
+      "impact": "Can significantly reduce photosynthesis, leading to lower grain fill and yield losses up to 50% in severe cases. Most damaging in continuous corn with minimal tillage."
+    },
+    {
+      "name": "Corn Northern Leaf Blight",
+      "symptoms": "Long, elliptical, gray-green or tan lesions (1–6 inches long) on leaves. Lesions may merge, causing leaf blight and premature death.",
+      "causes": "Fungal pathogen *Exserohilum turcicum*. Favors cool, wet conditions and high humidity. Survives in infected plant debris.",
+      "treatment": "Use resistant hybrids, crop rotation, and timely fungicide applications. Tillage to bury infected residue can reduce inoculum.",
+      "impact": "Can cause yield losses of 30–50% under severe infection, particularly when disease appears before or during flowering. Affects photosynthesis and grain development."
+
+    },
+    {
+      "name": "Grape Downy Mildew",
+      "symptoms": "Yellowish, oily spots on upper leaf surfaces that later turn brown. White, cottony fungal growth appears on the underside of leaves in humid conditions. Affects leaves, shoots, and fruit.",
+      "causes": "Oomycete pathogen *Plasmopara viticola*. Thrives in warm, humid, and wet conditions. Spreads through wind-blown sporangia and splashing water.",
+      "treatment": "Apply fungicides such as copper-based products or systemic options like metalaxyl. Improve air circulation by pruning, and avoid overhead irrigation. Remove infected plant material.",
+      "impact": "Can defoliate vines and reduce photosynthesis, leading to poor fruit ripening and significant crop loss. Severe infections may destroy entire clusters and reduce vine vigor in the following season."
+    },
+    {
+      "name": "Grape Powdery Mildew",
+    "symptoms": "White or grayish powdery fungal growth on both sides of leaves, young shoots, and berries. Infected berries may crack, shrivel, or fail to ripen properly.",
+    "causes": "Fungal pathogen *Erysiphe necator*. Favors warm, dry climates with high humidity. Spreads via airborne conidia and survives in dormant buds or bark.",
+    "treatment": "Use sulfur-based or systemic fungicides like myclobutanil. Practice canopy management to improve airflow and reduce humidity. Remove infected plant material.",
+    "impact": "Reduces photosynthesis, delays fruit ripening, and lowers grape quality and yield. Severe cases can lead to total crop loss and weakened vines for future seasons."
+    },
+    {
+      "name": "Olive Peacock Spot",
+      "symptoms": "Dark, circular spots with a yellow halo on olive leaves, resembling peacock feathers. Spots can enlarge and merge, causing leaf drop and reduced foliage.",
+      "causes": "Fungal pathogen *Spilocaea oleagina*. Thrives in wet, humid conditions and spreads through rain splash and wind.",
+      "treatment": "Apply copper-based fungicides during autumn and winter. Prune to improve air circulation and remove fallen leaves to reduce inoculum.",
+      "impact": "Leads to premature leaf loss, weakening the tree, reducing photosynthesis and fruit yield. Severe infections decrease olive oil production quality and quantity."
+    },
+    {
+      "name": "Olive Rust Mite",
+      "symptoms": "Bronzing or rust-colored discoloration on leaves and fruit surface. Leaves may become distorted and fruit size can be reduced, affecting overall fruit quality.",
+      "causes": "Infestation by *Calepitrimerus oleivorus*, a microscopic mite. Populations increase under warm, dry conditions and can spread rapidly by wind.",
+      "treatment": "Use miticides such as sulfur or specific acaricides. Encourage natural predators by minimizing broad-spectrum insecticides. Monitor mite populations regularly.",
+      "impact": "Causes reduced photosynthetic capacity and fruit quality, leading to lower olive yield and decreased oil content and quality."
+    },
+    {
+      "name": "Potato Early Blight",
+      "symptoms": "Dark brown to black lesions with concentric rings (target-like) on older leaves. Lesions start at leaf edges and expand, causing leaf yellowing and premature defoliation.",
+      "causes": "Fungal pathogen *Alternaria solani*. Thrives in warm, wet conditions and survives in soil and infected crop debris.",
+      "treatment": "Use resistant varieties, crop rotation, and apply fungicides (e.g., chlorothalonil, azoxystrobin) early in the season. Remove and destroy infected plant debris.",
+      "impact": "Reduces photosynthesis and tuber yield. Severe infections can cause significant yield losses and affect tuber quality due to secondary infections."
+    },
+    {
+      "name": "Potato Late Blight",
+      "symptoms": "Water-soaked, irregular dark lesions on leaves and stems that quickly enlarge and turn brown or black. White fungal growth may appear on the undersides of leaves in humid conditions. Tubers develop firm, brown, rotten areas.",
+      "causes": "Oomycete pathogen *Phytophthora infestans*. Prefers cool, wet, and humid weather. Spreads rapidly via spores through wind and rain.",
+      "treatment": "Use certified disease-free seed, resistant varieties, and apply fungicides such as chlorothalonil or metalaxyl preventively. Practice crop rotation and remove infected plant material promptly.",
+      "impact": "Causes severe yield losses, sometimes total crop failure. Tubers become unmarketable due to rot, significantly impacting potato production and storage."
+    },
+    {
+     "name": "Tomato Early Blight",
+      "symptoms": "Brown to black concentric ringed lesions (target spots) on older leaves, often starting near the stem. Leaves yellow and drop prematurely. Fruit may have dark, sunken spots.",
+      "causes": "Fungal pathogen *Alternaria solani*. Thrives in warm, wet, and humid conditions. Survives in soil and infected plant debris.",
+      "treatment": "Use resistant varieties, crop rotation, and apply fungicides like chlorothalonil or azoxystrobin. Remove infected plant debris and avoid overhead irrigation.",
+      "impact": "Reduces photosynthesis, leading to lower yield and fruit quality. Severe infection can cause defoliation and reduce marketable fruit production."
+    },
+    {
+      "name": "Tomato Late Blight",
+      "symptoms": "Water-soaked, irregular dark lesions on leaves and stems that rapidly enlarge and become brown to black. White fungal growth may appear on leaf undersides in humid conditions. Fruit develops firm, sunken, brown lesions.",
+      "causes": "Oomycete pathogen *Phytophthora infestans*. Prefers cool, wet, and humid environments. Spreads quickly via airborne spores and rain splash.",
+      "treatment": "Use resistant varieties, apply fungicides preventively (e.g., chlorothalonil, metalaxyl), practice crop rotation, and remove infected plants promptly.",
+      "impact": "Can cause rapid crop loss, severe yield reduction, and fruit decay making tomatoes unmarketable. Major threat to tomato production worldwide."
+    },
+    {
+      "name": "Wheat Septoria",
+      "symptoms": "Small, rectangular, tan to brown lesions with dark brown borders on leaves. Lesions often contain black pycnidia (fruiting bodies). Leaf tissue between lesions may yellow and die.",
+      "causes": "Fungal pathogens *Septoria tritici* and *Septoria nodorum*. Spread by rain splash and infected crop residue. Favored by cool, wet weather.",
+      "treatment": "Use resistant wheat varieties, crop rotation, and apply fungicides (e.g., triazoles) when needed. Manage residue and ensure good field drainage.",
+      "impact": "Reduces photosynthetic leaf area, causing decreased grain fill and yield losses. Severe infections can cause significant economic damage."
+    },
+    {
+      "name": "Wheat Yellow Rust",
+      "symptoms": "Bright yellow, powdery pustules arranged in stripes on leaf surfaces. Pustules rupture, releasing spores. Leaves may turn yellow and die prematurely.",
+      "causes": "Fungal pathogen *Puccinia striiformis*. Thrives in cool, moist conditions. Spread by windborne spores over long distances.",
+      "treatment": "Plant resistant wheat varieties, apply fungicides (e.g., triazoles or strobilurins) early, and practice crop rotation. Monitor fields for early detection.",
+      "impact": "Reduces photosynthesis and grain yield. Severe infections can cause significant yield losses, affecting both quantity and quality of wheat."
+    }
+  ]
+  

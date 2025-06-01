@@ -1,0 +1,19 @@
+{
+    "commonCrops": [
+      { "crop": "Corn", "diseases": ["Northern/Southern Blight", "Rust", "Smut"] },
+      { "crop": "Grapes", "diseases": ["Powdery Mildew", "Downy Mildew", "Black Rot"] },
+      { "crop": "Potatoes", "diseases": ["Late Blight", "Early Blight", "Scab"] },
+      { "crop": "Tomatoes", "diseases": ["Bacterial Spot", "Fusarium Wilt", "Blight"] },
+      { "crop": "Wheat", "diseases": ["Rust", "Powdery Mildew", "Septoria"] },
+      { "crop": "Olives", "diseases": ["Olive Knot", "Peacock Spot", "Verticillium Wilt"] }
+    ],
+    "keySymptoms": [
+      "Unusual leaf spots or discoloration",
+      "Wilting despite adequate water",
+      "Stunted or abnormal growth",
+      "Powdery or fuzzy growth on surfaces",
+      "Fruit or seed abnormalities",
+      "Premature yellowing or leaf drop"
+    ]
+  }
+  

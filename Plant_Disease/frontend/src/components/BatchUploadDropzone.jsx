@@ -134,7 +134,7 @@ export const BatchUploadDropzone = ({ apiUrl, formFieldName, token = null, onRes
 
   return (
     <motion.div
-      className="w-full rounded-xl overflow-hidden"
+      className="w-full h-full flex-col rounded-xl overflow-hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -147,7 +147,7 @@ export const BatchUploadDropzone = ({ apiUrl, formFieldName, token = null, onRes
             onResetSingle={resetSingleAnalysis}
           />
           {isAnalyzing && (
-            <div className="flex flex-col items-center py-8">
+            <div className="flex flex-col items-center py-8 h-full">
               <div className="w-16 h-16 border-4 border-t-green-500 border-green-200 rounded-full animate-spin mb-4"></div>
               <h3 className="text-xl font-medium mb-2">Analyzing your plants...</h3>
               <p className="text-gray-500">Our AI is examining the images for signs of disease</p>
@@ -160,31 +160,31 @@ export const BatchUploadDropzone = ({ apiUrl, formFieldName, token = null, onRes
           onDragLeave={handleDragLeave}
           onDragOver={handleDragOver}
           onDrop={handleDrop}
-          className={`border-2 border-dashed rounded-xl p-8 flex flex-col items-center justify-center text-center transition-all duration-200 
-          bg-white/80 backdrop-blur-sm ${
+          className={`flex-1 border-2 border-dashed rounded-xl p-8 flex flex-col items-center justify-center text-center transition-all duration-200 
+           bg-white/80 backdrop-blur-sm h-full ${
             isDragging ? "border-leaf-800 bg-leaf-100" : ""
           }`}
         >
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-              <Image className="w-8 h-8 text-green-600" />
-            </div>
-            <h3 className="text-xl font-medium mb-2">Drop your plant photo here</h3>
-            <p className="text-gray-500 mb-6">Drag and drop or click to upload</p>
-            <label className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-5 rounded-lg cursor-pointer transition-all transform hover:scale-105 flex items-center">
-              <ArrowUp className="w-4 h-4 mr-2" />
-              Upload Images
-              <input
-            id="fileInput"
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={handleFileSelect}
-            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-          />
-            </label>
-            <p className="mt-6 text-xs text-gray-500">
-              Supported format: PNG, Max size: 10MB
-            </p>
+            <Image className="w-8 h-8 text-green-600" />
+          </div>
+          <h3 className="text-xl font-medium mb-2">Drop your plant photo here</h3>
+          <p className="text-gray-500 mb-6">Drag and drop or click to upload</p>
+          <label className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-5 rounded-lg cursor-pointer transition-all transform hover:scale-105 flex items-center">
+            <ArrowUp className="w-4 h-4 mr-2" />
+            Upload Images
+            <input
+              id="fileInput"
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={handleFileSelect}
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+            />
+          </label>
+          <p className="mt-6 text-xs text-gray-500">
+            Supported format: PNG, Max size: 10MB
+          </p>
         </div>
       )}
     </motion.div>

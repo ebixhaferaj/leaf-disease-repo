@@ -27,7 +27,7 @@ const navigationItems = [
   },
   {
     title: 'Learn',
-    href: '/learn',
+    href: '/farmer/learn',
     icon: BookOpen
   },
   {

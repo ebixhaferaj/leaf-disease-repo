@@ -19,7 +19,7 @@ import FarmerPredictionPage from './pages/FarmerPredictionPage';
 import ReportsPage from './pages/ReportsPage';
 import ProfilePage from './pages/ProfilePage' ;
 import UpdateEmailPage from './pages/UpdateEmailPage';
-
+import LearnPage from './pages/LearnPage';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -53,6 +53,7 @@ function App() {
             <Route path='farmer/predictions' element={<FarmerPredictionPage/>}/>
             <Route path='farmer/reports' element={<ReportsPage/>}/>
             <Route path='farmer/profile' element={<ProfilePage/>}/>
+            <Route path='farmer/learn' element={<LearnPage />}/>
           </Route>
         </Route>
 

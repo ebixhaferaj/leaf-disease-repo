@@ -1,0 +1,75 @@
+{
+  "fungicides": [
+    {
+      "name": "Chlorothalonil",
+      "description": "Broad-spectrum fungicide used against many fungal leaf spots, blights, and mildews.",
+      "used_for": [
+        "Potato Early Blight",
+        "Tomato Early Blight",
+        "Potato Late Blight",
+        "Tomato Late Blight"
+      ]
+    },
+    {
+      "name": "Azoxystrobin (Strobilurins)",
+      "description": "Systemic fungicide with broad activity, common for early blights, Septoria, rusts, and some mildew diseases."
+    },
+    {
+      "name": "Copper-based fungicides",
+      "description": "Used against fungal diseases and some oomycetes, also effective against bacterial diseases.",
+      "used_for": [
+        "Olive Peacock Spot",
+        "other foliar fungal diseases"
+      ]
+    },
+    {
+      "name": "Sulfur-based fungicides",
+      "description": "Traditional treatment effective against powdery mildews and mite control.",
+      "used_for": [
+        "Grape Powdery Mildew",
+        "Olive Rust Mite"
+      ]
+    },
+    {
+      "name": "Metalaxyl / Mefenoxam",
+      "description": "Systemic fungicides specific for oomycetes (water molds).",
+      "used_for": [
+        "Potato Late Blight",
+        "Tomato Late Blight"
+      ]
+    }
+  ],
+  "safety_guidelines": [
+    "Always wear protective clothing including gloves, masks, and eye protection when handling fungicides.",
+    "Avoid inhaling spray mist and ensure good ventilation during application.",
+    "Do not apply fungicides near water sources to prevent contamination.",
+    "Follow the manufacturer's recommended dosage and application intervals strictly.",
+    "Wash hands and exposed skin thoroughly after handling fungicides.",
+    "Store fungicides in a secure, cool, dry place away from children and pets.",
+    "Dispose of empty containers safely according to local regulations.",
+    "Avoid applying fungicides during windy conditions to reduce drift.",
+    "Do not consume food or drink during fungicide application."
+  ],
+  "organic_treatments": [
+    {
+      "method": "Neem oil",
+      "description": "A natural pesticide and fungicide that controls a wide range of fungal diseases and pests."
+    },
+    {
+      "method": "Baking soda sprays",
+      "description": "Sodium bicarbonate sprays can help reduce fungal growth on leaves by altering surface pH."
+    },
+    {
+      "method": "Compost teas",
+      "description": "Liquid extracts from compost that contain beneficial microbes helping suppress pathogens."
+    },
+    {
+      "method": "Garlic extract",
+      "description": "Natural antifungal properties that can reduce fungal spore germination and spread."
+    },
+    {
+      "method": "Copper-based organic fungicides",
+      "description": "Approved for organic farming, copper compounds can be used in limited amounts."
+    }
+  ]
+}

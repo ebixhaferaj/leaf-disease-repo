@@ -17,9 +17,6 @@ const diseaseData = [
 ];
 
 const Dashboard = () => {
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  const [results, setResults] = useState([]);
-
   const token = localStorage.getItem('accessToken');
 
   const handleResult = (predictionData) => {
@@ -37,20 +34,22 @@ const Dashboard = () => {
       </div>
 
       {/* Main Layout Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 ">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-full">
         {/* Upload Card - LEFT (2/3) */}
-        <div className="lg:col-span-2 bg-white border rounded-lg shadow p-4">
+        <div className="lg:col-span-2 bg-white border rounded-lg shadow p-4 flex flex-col h-full">
           <div className="flex items-center gap-2 mb-4">
             <Upload className="w-5 h-5 text-leaf-700" />
             <h2 className="text-lg font-semibold">Upload Plant Images</h2>
           </div>
 
-          <BatchUploadDropzone  
-            apiUrl="http://localhost:8000/batch-predict" 
-            formFieldName="files"
-            token={token} 
-            onResult={handleResult}
-          />
+          <div className='flex-1'>
+            <BatchUploadDropzone  
+              apiUrl="http://localhost:8000/batch-predict" 
+              formFieldName="files"
+              token={token} 
+              onResult={handleResult}
+            />
+          </div>
         </div>
 
         {/* Stats + Chart - RIGHT (1/3) */}

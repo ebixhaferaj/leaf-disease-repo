@@ -1,0 +1,23 @@
+[
+    {
+      "season": "Spring",
+      "tips": ["Monitor for early fungal infections", "Apply preventative treatments", "Check soil drainage"],
+      "diseases": ["Early blight", "Downy mildew"]
+    },
+    {
+      "season": "Summer",
+      "tips": ["Watch for heat stress symptoms", "Maintain proper irrigation", "Monitor for bacterial diseases"],
+      "diseases": ["Bacterial spot", "Powdery mildew"]
+    },
+    {
+      "season": "Fall",
+      "tips": ["Prepare for harvest diseases", "Clean up plant debris", "Plan crop rotation"],
+      "diseases": ["Late blight", "Storage diseases"]
+    },
+    {
+      "season": "Winter",
+      "tips": ["Plan next season", "Study disease patterns", "Prepare equipment"],
+      "diseases": ["Soil-borne pathogens"]
+    }
+  ]
+  
