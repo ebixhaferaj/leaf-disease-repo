@@ -14,20 +14,18 @@ const Header = () => {
           <span className="font-medium text-xl">HealthyGreens</span>
         </a>
         <nav className="hidden md:flex items-center space-x-6">
-          <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">How It Works</a>
-          <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Plants Database</a>
+          <a href="/how-it-works" className="text-muted-foreground hover:text-foreground transition-colors">How It Works</a>
+          <a href="plants-database" className="text-muted-foreground hover:text-foreground transition-colors">Plants Database</a>
           <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">About</a>
         </nav>
         <div className="flex items-center space-x-3">
-  <NavLink to="/login" className="hidden md:inline-flex items-center px-4 py-2 border border-leaf-200 text-leaf-700 bg-white hover:bg-leaf-50 hover:text-leaf-700 rounded-md transition-colors">
-    Sign In
-  </NavLink>
-  <NavLink to="register" className="inline-flex items-center px-4 py-2 bg-leaf-600 hover:bg-leaf-700 text-white rounded-md transition-colors">
-    Create Account
-  </NavLink>
-</div>
-
-
+          <NavLink to="/login" className="hidden md:inline-flex items-center px-4 py-2 border border-leaf-200 text-leaf-700 bg-white hover:bg-leaf-50 hover:text-leaf-700 rounded-md transition-colors">
+            Sign In
+          </NavLink>
+          <NavLink to="register" className="inline-flex items-center px-4 py-2 bg-leaf-600 hover:bg-leaf-700 text-white rounded-md transition-colors">
+            Create Account
+          </NavLink>
+        </div>
       </div>
     </header>
   );

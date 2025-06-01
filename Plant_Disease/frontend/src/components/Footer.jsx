@@ -39,7 +39,6 @@ const Footer = () => {
               <li><a href="#" className="text-muted-foreground hover:text-leaf-700">Home</a></li>
               <li><a href="#" className="text-muted-foreground hover:text-leaf-700">How It Works</a></li>
               <li><a href="#" className="text-muted-foreground hover:text-leaf-700">Plant Database</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-leaf-700">Disease Library</a></li>
               <li><a href="#" className="text-muted-foreground hover:text-leaf-700">Contact Us</a></li>
             </ul>
           </div>
@@ -56,7 +55,7 @@ const Footer = () => {
         </div>
         
         <div className="mt-12 pt-6 border-t border-leaf-200 text-center md:text-left text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} PlantHealth. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} HealthyGreens. All rights reserved.</p>
         </div>
       </div>
     </footer>

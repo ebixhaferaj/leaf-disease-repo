@@ -123,7 +123,7 @@ const UploadDropzone = ({ apiUrl, formFieldName, token = null, onResult = () => 
 
   return (
     <motion.div
-      className="w-full rounded-xl overflow-hidden"
+      className="w-full rounded-xl overflow-hidden "
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}

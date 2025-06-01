@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, Query
 from app.database.database import db_dependency
 from app.models import Users, Report
 from app.schemas import ReportRenameRequest
-from app.services import get_current_user,delete_pdf_report, RoleChecker
+from app.services import get_current_user,delete_pdf_report, RoleChecker, get_reports
 from fastapi.responses import FileResponse
 from typing import Literal
 from sqlalchemy import or_, func
@@ -98,3 +98,22 @@ async def download_report_pdf(filename: str, current_user=Depends(get_current_us
         media_type='application/pdf',
         filename=safe_filename
     )
+
+
+@router.get("/statistics")
+async def get_report_statistics(
+    db: db_dependency,
+    current_user: Users = Depends(get_current_user),
+):
+    reports = get_reports(db, current_user.id)
+    
+    if not reports:
+        return{
+            "total": 0,
+        }
+    
+    total_reports = len(reports)
+    
+    return {
+        "total": total_reports
+    }

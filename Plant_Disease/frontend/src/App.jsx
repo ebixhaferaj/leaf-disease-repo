@@ -20,6 +20,8 @@ import ReportsPage from './pages/ReportsPage';
 import ProfilePage from './pages/ProfilePage' ;
 import UpdateEmailPage from './pages/UpdateEmailPage';
 import LearnPage from './pages/LearnPage';
+import HowItWorksPage from './pages/HowItWorksPage';
+import ClassesDatabase from './components/ClassesDatabase';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -38,7 +40,9 @@ function App() {
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
         <Route path='confirm-email-update' element={<UpdateEmailPage />}/>
         <Route path="/" element={<HomePage/>}/>
-
+        <Route path="/how-it-works" element={<HowItWorksPage/>}/>
+        <Route path="/plants-database" element={<ClassesDatabase/>}/>
+        
         {/* protected routes */}
           {/* User  */}
         <Route element = {<MainLayout/>}>

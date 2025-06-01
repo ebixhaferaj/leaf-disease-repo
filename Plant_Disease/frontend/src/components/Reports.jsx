@@ -212,7 +212,7 @@ const Reports = () => {
                       onClick={() => startEditing(report.id, report.report_name)}
                     />
                     <p className="text-gray-600 text-sm">
-                      Created: {new Date(report.created_at).toLocaleString()}
+                      Created: {new Date(report.created_at).toLocaleString('en-GB', { year: 'numeric', month: 'numeric', day: 'numeric' })}
                     </p>
                   </div>
                 )}

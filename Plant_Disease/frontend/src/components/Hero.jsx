@@ -8,7 +8,7 @@ const Hero = () => {
   const [showUpload, setShowUpload] = useState(false);
   
   return (
-    <section className="relative min-h-[85vh] flex flex-col justify-center items-center py-12 px-4">
+    <section className="relative min-h-[85vh] flex flex-col justify-center items-center py-12 px-4 ">
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden -z-10">
         <div className="absolute -top-10 -left-10 w-64 h-64 bg-leaf-100 rounded-full blur-3xl opacity-30"></div>

@@ -21,3 +21,4 @@ async def get_prediction(
     prediction = get_prediction_by_id(db=db, user_id=current_user.id, prediction_id=prediction_id)
 
     return prediction
+

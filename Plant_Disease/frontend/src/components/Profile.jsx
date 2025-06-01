@@ -4,11 +4,14 @@ import instance from '../api/axios';
 import ChangePasswordForm from './ChangePasswordForm';
 import UpdateEmailForm from './UpdateEmailForm';
 import UpdateUsernameForm from './UpdateUsernameForm';
-
+import ClipLoader from 'react-spinners/ClipLoader';
 const Profile = () => {
   const [userData, setUserData] = useState({ username: '', email: '' });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+
+  const token = localStorage.getItem('accessToken');
 
   // Change Password
   const [showChangePassword, setShowChangePassword] = useState(true);
@@ -18,6 +21,55 @@ const Profile = () => {
 
   // Change Username
   const [showUpdateUsername, setShowUpdateUsername] = useState(true);
+  
+
+  // Account Summary
+  const [PredSummaryData, setPredSummaryData] = useState([]);
+  const [RepSummaryData, setRepSummaryData] = useState([]);
+
+  useEffect(() => {
+    const fetchReportSummaryData = async () => {
+      try {
+        const response = await instance.get('get-report/statistics', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+  
+        const data = response.data;
+  
+        const formattedData = [
+          { number: data.total, label: "Total Reports" }
+        ];
+  
+        setRepSummaryData(formattedData);
+      } catch (err) {
+        console.error("Failed to fetch summary data", err);
+      }
+    };
+    fetchReportSummaryData();
+  }, []);
+
+  useEffect(() => {
+    const fetchSummaryData = async () => {
+      try {
+        const response = await instance.get('confirmed-predictions/statistics', {
+          headers: { Authorization: `Bearer ${token}` }
+
+        });
+  
+        const data = response.data;
+  
+        const formattedData = [
+          { number: data.total, label: "Total Confirmed Predictions" }
+        ];
+  
+        setPredSummaryData(formattedData);
+      } catch (err) {
+        console.error("Failed to fetch summary data", err);
+      }
+    };
+    fetchSummaryData();
+  }, []);
+
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -36,7 +88,11 @@ const Profile = () => {
     fetchUserData();
   }, []);
 
-  if (loading) return <div className="p-6">Loading profile...</div>;
+  if (loading) return(
+    <div className="flex justify-center items-center h-screen">
+      <ClipLoader color='#2F855A' loading={loading} size={50} />
+    </div>
+  )
   if (error) return <div className="p-6 text-red-600">Error: {error}</div>;
 
   return (
@@ -85,19 +141,33 @@ const Profile = () => {
             <header className="px-6 py-4 border-b border-gray-200 text-lg font-semibold">
               Account Statistics
             </header>
-            <div className="px-6 py-4 space-y-4">
-              {[
-                { number: 47, label: 'Total Predictions' },
-                { number: 12, label: 'Generated Reports' },
-              ].map(({ number, label }) => (
-                <React.Fragment key={label}>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-green-700">{number}</div>
-                    <div className="text-sm text-gray-500">{label}</div>
-                  </div>
-                  <hr className="border-gray-200" />
-                </React.Fragment>
-              ))}
+
+            <div className="px-6 py-4 space-y-6">
+              {/* Confirmed Predictions */}
+              <div>
+                <div className="space-y-4">
+                  {PredSummaryData.map(({ number, label }) => (
+                    <div key={label} className="text-center">
+                      <div className="text-2xl font-bold text-green-700">{number}</div>
+                      <div className="text-sm text-gray-500">{label}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+                
+              <hr className="border-gray-200" />
+                
+              {/* Report Predictions */}
+              <div>
+                <div className="space-y-4">
+                  {RepSummaryData.map(({ number, label }) => (
+                    <div key={label} className="text-center">
+                      <div className="text-2xl font-bold text-green-700">{number}</div>
+                      <div className="text-sm text-gray-500">{label}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </section>
         </div>

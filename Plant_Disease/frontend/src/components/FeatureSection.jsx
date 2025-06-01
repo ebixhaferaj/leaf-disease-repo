@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 const features = [
   {
     title: "Instant Disease Detection",
-    description: "Our AI analyzes your plant photos in seconds to identify the 12 most common leaf diseases in Europe.",
+    description: "Our AI-Classification Model analyzes your plant photos in seconds to identify the 12 most common fungal leaf diseases in Europe.",
     icon: (
       <svg className="w-12 h-12 text-leaf-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12.75L11.25 15 15 9.75M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" />
@@ -13,7 +13,7 @@ const features = [
   },
   {
     title: "Expert Treatment Plans",
-    description: "Get customized treatment recommendations based on the specific disease and plant type.",
+    description: "Get treatment recommendations based on the specific disease and plant type.",
     icon: (
       <svg className="w-12 h-12 text-leaf-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
@@ -22,7 +22,7 @@ const features = [
   },
   {
     title: "Prevention Education",
-    description: "Learn how to prevent future outbreaks with tailored guidance for your specific plants and growing conditions.",
+    description: "Learn how to identify diseases and prevent future outbreaks.",
     icon: (
       <svg className="w-12 h-12 text-leaf-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
