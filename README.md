@@ -52,7 +52,7 @@ The model classifies 19 leaf classes including healthy leaves and 12 major funga
 
 ---
 
-## 🌐 Frontend (React + TailwindCSS)
+## Frontend (React + TailwindCSS)
 
 ### Tech Stack
 
