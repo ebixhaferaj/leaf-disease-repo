@@ -22,7 +22,7 @@ DISEASE_COLORS = {
   "Potato Early Blight": "#ED8936",       
   "Potato Healthy": "#48BB78",            
   "Potato Late blight": "#E53E3E",      
-  "Tomato Early blight": "#F56565",       
+  "Tomato Early blight": "#FA5151",       
   "Tomato Healthy": "#38A169",           
   "Tomato Late Blight": "#C53030",      
   "Wheat Healthy": "#68D391",           

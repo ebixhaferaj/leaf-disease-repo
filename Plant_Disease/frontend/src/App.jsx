@@ -5,7 +5,7 @@ import RegisterPage from './pages/RegisterPage'
 import VerifyEmailPage from './pages/VerifyEmailPage'
 import LoginPage from './pages/LoginPage';
 import { Toaster } from 'react-hot-toast';
-import MainLayout from './layouts/MainLayout';
+import UserLayout from './layouts/UserLayout';
 import RequireAuth from './components/RequireAuth';
 import HomePageFarmer from './pages/HomePageFarmer';
 import HomePageUser from './pages/HomePageUser';
@@ -22,6 +22,8 @@ import UpdateEmailPage from './pages/UpdateEmailPage';
 import LearnPage from './pages/LearnPage';
 import HowItWorksPage from './pages/HowItWorksPage';
 import ClassesDatabase from './components/ClassesDatabase';
+import UserPredictionPage from './pages/UserPredictionPage';
+import UserProfilePage from './pages/UserProfilePage'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -32,10 +34,14 @@ function App() {
       <Toaster position="top-right" />
       <Routes>
         {/* public routes */}
-        <Route path="/register" element={<RegisterPage />} />
+
+        <Route path="/register" element={
+            <RegisterPage />
+        } />
         <Route path="/verify-email" element={<VerifyEmailPage />} />
-        <Route 
-          path="/login" element={<LoginPage/>} />
+        <Route path="/login" element={
+            <LoginPage />
+        } />
         <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
         <Route path='confirm-email-update' element={<UpdateEmailPage />}/>
@@ -45,9 +51,11 @@ function App() {
         
         {/* protected routes */}
           {/* User  */}
-        <Route element = {<MainLayout/>}>
+        <Route element = {<UserLayout/>}>
           <Route element={<RequireAuth allowedRoles={['user']}/>}>
           <Route path='user/home' element={<HomePageUser />} />
+          <Route path='user/predictions' element={<UserPredictionPage/>}/>
+          <Route path='user/profile' element={<UserProfilePage/>}/>
           </Route>
         </Route>
           {/* Farmer */}

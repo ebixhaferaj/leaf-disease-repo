@@ -2,32 +2,6 @@ import React from 'react';
 import { Leaf, ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-//const mockAnalysisData = {
-//  disease: "Powdery Mildew",
-//  confidence: 89,
-//  description: "Powdery mildew is a fungal disease that affects a wide range of plants...",
-//  treatments: [
-//    {
-//      name: "Neem Oil Spray",
-//      description: "Apply neem oil solution to affected areas once a week..."
-//    },
-//    {
-//      name: "Improve Air Circulation",
-//      description: "Prune the plant to improve air flow..."
-//    },
-//    {
-//      name: "Baking Soda Solution",
-//      description: "Mix 1 tbsp baking soda with 1 gallon of water..."
-//    }
-//  ],
-//  preventionTips: [
-//    "Avoid overhead watering; water at the base of plants",
-//    "Space plants properly for adequate air circulation",
-//    "Remove and dispose of infected plant debris",
-//    "Use resistant plant varieties when available"
-//  ]
-//};
-
 const PlantAnalysisResult = ({ imageUrl, analysisData, onReset }) => {
   return (
     <motion.div
@@ -65,7 +39,7 @@ const PlantAnalysisResult = ({ imageUrl, analysisData, onReset }) => {
                       style={{ width: `${Math.round(analysisData.confidence * 1000) / 10}%` }}
                     />
                   </div>
-                  <span className="ml-2 text-sm">{analysisData.confidence * 100}% confidence</span>
+                  <span className="ml-2 text-sm">{analysisData.confidence.toFixed(1) * 100}% confidence</span>
                 </div>
               </div>
             </div>
@@ -77,41 +51,14 @@ const PlantAnalysisResult = ({ imageUrl, analysisData, onReset }) => {
           <h2 className="text-2xl font-bold mb-4">Disease Description</h2>
           <p className="text-gray-600 mb-6">{analysisData.description}</p>
 
-          {/* Treatments 
-          <div className="mb-6">
-            <h3 className="text-lg font-semibold mb-3">Recommended Treatments</h3>
-            <div className="space-y-4">
-              {mockAnalysisData.treatments.map((treatment, index) => (
-                <div
-                  key={index}
-                  className="border border-leaf-100 rounded-md bg-green-50 p-4"
-                >
-                  <h4 className="font-medium text-leaf-700 mb-1">{treatment.name}</h4>
-                  <p className="text-sm text-gray-600">{treatment.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>*/}
-
           {/* Separator */}
           <div className="border-t my-6" />
-
-          {/* Prevention Tips 
-          <div>
-            <h3 className="text-lg font-semibold mb-3">Prevention Tips</h3>
-            <ul className="list-disc list-inside space-y-2 text-gray-600">
-              {mockAnalysisData.preventionTips.map((tip, index) => (
-                <li key={index}>{tip}</li>
-              ))}
-            </ul>
-          </div>
-          */}
 
           {/* Footer note */}
           <div className="mt-8 pt-4 border-t">
             <p className="text-sm text-gray-500">
               For advanced features and farm-wide reports,{" "}
-              <a href="#" className="text-leaf-600 hover:text-leaf-700 font-medium">
+              <a href="/register" className="text-leaf-600 hover:text-leaf-700 font-medium">
                 create a free account
               </a>
               .

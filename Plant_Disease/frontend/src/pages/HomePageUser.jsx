@@ -1,12 +1,10 @@
 import React from 'react'
-import Hero from '../components/Hero'
-import HomeCards from '../components/HomeCards'
+import UserDashboard from '../components/UserDashboard'
 
 const HomePageUser = () => {
   return (
     <>
-    <Hero title="The Model will be here" subtitle="Hello User!!"/>
-    <HomeCards/>
+    <UserDashboard />
     </>
   )
 }

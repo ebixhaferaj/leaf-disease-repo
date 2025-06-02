@@ -5,8 +5,9 @@ import AuthContext from "../context/AuthProvider";
 const RedirectIfLoggedIn = ({ children }) => {
   const { auth } = useContext(AuthContext);
 
-  if (auth?.accessToken) {
-    return <Navigate to="/" replace />;
+  if (auth?.accessToken && auth?.role) {
+    const redirectPath = auth.role === 'farmer' ? '/farmer/home' : '/user/home';
+    return <Navigate to={redirectPath} replace />;
   }
 
   return children;

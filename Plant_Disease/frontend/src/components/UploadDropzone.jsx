@@ -54,7 +54,7 @@ const UploadDropzone = ({ apiUrl, formFieldName, token = null, onResult = () => 
     const file = files[0];
 
     if (!file.type.startsWith('image/')) {
-      toast('Unsupported File', 'Please upload an image file (.PNG)');
+      toast('Unsupported File', 'Please upload an image file (.JPG)');
       return;
     }
 
@@ -172,7 +172,7 @@ const UploadDropzone = ({ apiUrl, formFieldName, token = null, onResult = () => 
               />
             </label>
             <p className="mt-6 text-xs text-gray-500">
-              Supported format: PNG, Max size: 10MB
+              Supported format: JPG 224x224, Max size: 10MB
             </p>
           </>
         )}
